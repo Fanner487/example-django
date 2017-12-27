@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http.response
+from django.http.response import JsonResponse
 
 from django.shortcuts import render
 
