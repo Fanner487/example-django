@@ -15,7 +15,9 @@ from django.shortcuts import render
 class SubscriberView(APIView):
 	# This method is overwritten
 	def get(self, request):
-		return Response({"message": "Hello world!"})
+		all_subscribers = Subscriber.objects.all()
+		serialized_subscribers = SubscriberSerializer(all_subscribers, many=True)
+		return Response(serialized_subscribers.data)
 
 	def post(self, request):
 
