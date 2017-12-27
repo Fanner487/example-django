@@ -4,30 +4,28 @@ from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import HelloWorldSerializer
+from .serializers import SubsriberSerializer
+from .models import Subscriber
 
 from django.shortcuts import render
 
 # Create your views here.
 
 
-class HelloWorldView(APIView):
+class SubscriberView(APIView):
 	# This method is overwritten
 	def get(self, request):
 		return Response({"message": "Hello world!"})
 
 	def post(self, request):
 
-		serializer = HelloWorldSerializer(data=request.data)
+		serializer = SubscriberSerializer(data=request.data)
 
 		if serializer.is_valid():
 			
-			valid_data = serializer.data
+			subscriber_instance = Subscriber.objects.create(**serializer.data)
 
-			name = valid_data.get("name")
-			age = valid_data.get("age")
-
-			return Response({"message": "Hello {}, you're {} years old".format(name, age)})
+			return Response({"message": "Created subscriber {}".format(subscriber_instance.id)}})
 		else:
 			return Response({"errors": serializer.errors})
 
