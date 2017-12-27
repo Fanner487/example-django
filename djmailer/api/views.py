@@ -4,7 +4,7 @@ from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import SubsriberSerializer
+from .serializers import SubscriberSerializer
 from .models import Subscriber
 
 from django.shortcuts import render
