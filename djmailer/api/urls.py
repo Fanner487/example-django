@@ -6,7 +6,7 @@ from .views import SubscriberViewSet
 # from .views import hello_world
 
 router = SimpleRouter()
-router.register("subsribers", SubscriberViewSet)
+router.register("subscribers", SubscriberViewSet)
 
 urlpatterns = router.urls
 
