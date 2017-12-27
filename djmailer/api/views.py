@@ -25,7 +25,7 @@ class SubscriberView(APIView):
 			
 			subscriber_instance = Subscriber.objects.create(**serializer.data)
 
-			return Response({"message": "Created subscriber {}".format(subscriber_instance.id)}})
+			return Response({"message": "Created subscriber {}".format(subscriber_instance.id)})
 		else:
 			return Response({"errors": serializer.errors})
 
