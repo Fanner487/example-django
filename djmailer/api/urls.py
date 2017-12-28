@@ -3,6 +3,7 @@ from rest_framework.routers import SimpleRouter
 
 # from .views import SubscriberView
 from .views import SubscriberViewSet
+from .views import login
 # from .views import hello_world
 
 router = SimpleRouter()
