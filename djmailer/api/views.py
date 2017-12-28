@@ -14,6 +14,8 @@ from django.contrib.auth import authenticate
 
 from django.shortcuts import render
 
+from django.contrib.auth.models import User
+
 # Create your views here.
 
 class SubscriberViewSet(ModelViewSet):
@@ -81,3 +83,15 @@ def login(request):
 		return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
 	else: 
 		return Response({"message": "Login successful"})
+
+
+@api_view(["POST"])
+def register(request):
+	username = request.data.get("username")
+	password = request.data.get("password")
+	email = request.data.get("email")
+
+	user = User.objects.create_user(username, password, email)
+
+	return Response({"message": "Created account"})
+
