@@ -19,14 +19,14 @@ class SubscriberViewSet(ModelViewSet):
 	serializer_class = SubscriberSerializer
 	queryset = Subscriber.objects.all()
 
-	def create(self, request):
-		serializer = SubscriberSerializer(data=request.data)
+	# def create(self, request):
+	# 	serializer = SubscriberSerializer(data=request.data)
 
-		if serializer.is_valid():
-			subscriber_instance = Subscriber.objects.create(**serializer.data)
-			return Response({"message": "Created subscriber {}".format(subscriber_instance.id)})
-		else:
-			return Response({"errors": serializer.errors})
+	# 	if serializer.is_valid():
+	# 		subscriber_instance = Subscriber.objects.create(**serializer.data)
+	# 		return Response({"message": "Created subscriber {}".format(subscriber_instance.id)})
+	# 	else:
+	# 		return Response({"errors": serializer.errors})
 
 
 # class SubscriberView(ListCreateAPIView):
