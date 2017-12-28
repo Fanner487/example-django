@@ -9,3 +9,6 @@ class SubscriberSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Subscriber
 		fields = "__all__"
+
+
+# class UserSerializer(serializers.ModelSerializer)

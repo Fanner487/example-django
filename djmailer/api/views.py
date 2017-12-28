@@ -10,6 +10,8 @@ from .serializers import SubscriberSerializer
 from .models import Subscriber
 from rest_framework.generics import ListCreateAPIView
 
+from django.contrib.auth import authenticate
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -68,3 +70,14 @@ class SubscriberViewSet(ModelViewSet):
 # 		else:
 # 			return Response({"message": "Hello {}!".format(name)})
 
+@api_view(["POST"])
+def login(request):
+	username = request.data.get("username")
+	password = request.data.get("password")
+
+	user = authenticate(username=username, password=password)
+
+	if not user:
+		return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+	else: 
+		return Response({"message": "Login successful"})

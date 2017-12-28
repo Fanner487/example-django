@@ -8,10 +8,12 @@ from .views import SubscriberViewSet
 router = SimpleRouter()
 router.register("fatcunt", SubscriberViewSet)
 
-urlpatterns = router.urls
 
-# urlpatterns = [
-#     # url(r'^hello', hello_world, name="hello_world")
-#     url(r'^hello', SubscriberView.as_view(), name="subsriber")
-#     # url(r'^hello', hello_world, name="hello_world")
-# ]
+
+urlpatterns = [
+    url(r'^login', login, name="login")
+    # url(r'^hello', SubscriberView.as_view(), name="subsriber")
+    # url(r'^hello', hello_world, name="hello_world")
+]
+
+urlpatterns += router.urls
