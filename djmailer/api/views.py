@@ -95,17 +95,18 @@ def register(request):
 
 	if verify_unique_username_email(username, email):
 		print("\n\nEmail is unique\n\n")
+
+		new_user = User.objects.create_user(username, email, password)
+
+		new_user.is_active = True
+		new_user.first_name = first_name
+		new_user.last_name = surname
+		new_user.save()
+
+		return Response({"message": "Created account"})
 	else:
-		print("\n\nEmail is NOT unique\n\n")
-
-	new_user = User.objects.create_user(username, email, password)
-
-	new_user.is_active = True
-	new_user.first_name = first_name
-	new_user.last_name = surname
-	new_user.save()
-
-	return Response({"message": "Created account"})
+		return Response({"message": "Invalid Details"})
+	
 
 
 def verify_unique_username_email(username, email):
