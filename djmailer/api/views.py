@@ -90,8 +90,15 @@ def register(request):
 	username = request.data.get("username")
 	password = request.data.get("password")
 	email = request.data.get("email")
+	first_name = request.data.get("firstname")
+	surname = request.data.get("surname")
 
-	user = User.objects.create_user(username, email, password)
+	new_user = User.objects.create_user(username, email, password)
+
+	new_user.is_active = True
+	new_user.first_name = first_name
+	new_user.last_name = last_name
+	new_user.save()
 
 	return Response({"message": "Created account"})
 
