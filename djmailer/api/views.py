@@ -97,7 +97,7 @@ def register(request):
 
 	new_user.is_active = True
 	new_user.first_name = first_name
-	new_user.last_name = last_name
+	new_user.last_name = surname
 	new_user.save()
 
 	return Response({"message": "Created account"})
