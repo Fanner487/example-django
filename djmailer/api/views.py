@@ -117,8 +117,8 @@ def verify_unique_username_email(username, email):
 	usernames = User.objects.filter(username=username)
 	emails = User.objects.filter(email=email)
 
-	if not emails.exists() and usernames.exists():
-		return True, None
+	if not emails.exists() and not usernames.exists():
+		return True
 	else:
 		if emails.exists():
 			return False, "Email"
