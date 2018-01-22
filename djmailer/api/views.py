@@ -93,7 +93,10 @@ def register(request):
 	first_name = request.data.get("firstname")
 	surname = request.data.get("surname")
 
-	if verify_unique_username_email(username, email):
+	unique, invalid_field = verify_unique_username_email(username, email)
+
+
+	if unique:
 		print("\n\nEmail is unique\n\n")
 
 		new_user = User.objects.create_user(username, email, password)
@@ -105,7 +108,7 @@ def register(request):
 
 		return Response({"message": "Created account"})
 	else:
-		return Response({"message": "Invalid Details"})
+		return Response({"message": invalid_field + " already exists"})
 	
 
 
@@ -114,10 +117,19 @@ def verify_unique_username_email(username, email):
 	usernames = User.objects.filter(username=username)
 	emails = User.objects.filter(email=email)
 
-	if emails.exists():
-		return False
-	else:
+	if not emails.exists() and usernames.exists():
 		return True
+	else:
+		if emails.exists():
+			return False, "Email"
+
+		elif usernames.exists():
+			return False, "Username"
+		else:
+			return False
+
+
+
 
 
 
