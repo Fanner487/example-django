@@ -93,6 +93,11 @@ def register(request):
 	first_name = request.data.get("firstname")
 	surname = request.data.get("surname")
 
+	if verify_unique_username_email(username, email):
+		print("\n\nEmail is unique\n\n")
+	else:
+		print("\n\nEmail is NOT unique\n\n")
+
 	new_user = User.objects.create_user(username, email, password)
 
 	new_user.is_active = True
@@ -101,4 +106,17 @@ def register(request):
 	new_user.save()
 
 	return Response({"message": "Created account"})
+
+
+def verify_unique_username_email(username, email):
+
+	usernames = User.objects.filter(username=username)
+	emails = User.objects.filter(email=email)
+
+	if emails.exists():
+		return False
+	else:
+		return True
+
+
 
