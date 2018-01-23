@@ -3,13 +3,14 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from datetime import datetime 
 
 # Create your models here.
 class Subscriber(models.Model):
 	name = models.CharField("Name", max_length=50)
 	age = models.IntegerField("Age")
 	email = models.EmailField("Email")
-	created = models.DateTimeField(auto_now_add=True, blank=True)
+	created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
 
 # class Event(models.Model):
