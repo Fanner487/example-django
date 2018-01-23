@@ -8,7 +8,8 @@ class SubscriberSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Subscriber
-		fields = "__all__"
+		# fields = "__all__"
+		exclude = ('created',)
 
 
 # class UserSerializer(serializers.ModelSerializer)
