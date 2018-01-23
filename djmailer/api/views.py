@@ -25,10 +25,10 @@ class EventViewSet(ModelViewSet):
 
 
 
-# class AttemptViewSet(ModelViewSet):
+class AttemptViewSet(ModelViewSet):
 
-# 	serializer_class = AttemptSerializer
-# 	queryset = Attempt.objects.all()
+	serializer_class = AttemptSerializer
+	queryset = Attempt.objects.all()
 
 
 
