@@ -9,7 +9,7 @@ class Subscriber(models.Model):
 	name = models.CharField("Name", max_length=50)
 	age = models.IntegerField("Age")
 	email = models.EmailField("Email")
-	created = models.DateTimeField(auto_now_add=True)
+	created = models.DateTimeField(auto_now_add=True, default=datetime.now)
 
 
 # class Event(models.Model):
