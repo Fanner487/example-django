@@ -31,6 +31,6 @@ class Event(models.Model):
 class Attempt(models.Model):
 	username = models.CharField("username", max_length=50)
 	event_id = models.IntegerField("event_id")
-	created = models.DateTimeField(auto_add_now=True)
+	created = models.DateTimeField(auto_now_add=True)
 	time_on_screen = models.DateTimeField(null=True, blank=True)
 	date_on_screen = models.DateTimeField(null=True, blank=True)
