@@ -76,6 +76,7 @@ class SubscriberViewSet(ModelViewSet):
 @api_view(["GET"])
 def view_subscribers(request, username):
 	print("\n\n" + username + "\n\n")
+	return Response({"message": "Yo waddap"})
 
 
 
