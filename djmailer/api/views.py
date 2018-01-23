@@ -72,6 +72,13 @@ class SubscriberViewSet(ModelViewSet):
 # 		else:
 # 			return Response({"message": "Hello {}!".format(name)})
 
+
+@api_view(["GET"])
+def view_subscribers(request, username):
+	print("\n\n" + username + "\n\n")
+
+
+
 @api_view(["POST"])
 def login(request):
 	username = request.data.get("username")
