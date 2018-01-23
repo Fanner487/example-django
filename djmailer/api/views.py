@@ -76,15 +76,10 @@ class SubscriberViewSet(ModelViewSet):
 @api_view(["GET"])
 def view_subscribers(request, username):
 	
-	queryset = Subscriber.objects.filter(email=username)
-	serialized = SubscriberSerializer(queryset, many=True)
+	data = Subscriber.objects.filter(email=username)
+	serialized = SubscriberSerializer(data, many=True)
 
 	return Response(serialized)
-
-		# def get(self, request):
-	# 	all_subscribers = Subscriber.objects.all()
-	# 	serialized_subscribers = SubscriberSerializer(all_subscribers, many=True)
-	# 	return Response(serialized_subscribers.data)
 
 
 
