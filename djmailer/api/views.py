@@ -81,7 +81,7 @@ def view_subscribers(request, username):
 	print(data)
 	serialized = SubscriberSerializer(data, many=True)
 
-	return Response(serialized)
+	return Response(serialized.data)
 
 
 
