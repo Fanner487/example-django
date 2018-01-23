@@ -16,12 +16,21 @@ class Subscriber(models.Model):
 
 
 
-# class Event(models.Model):
-# 	organiser = models.CharField("organiser", max_length=50)
-# 	event_name = models.CharField("event_name", max_length=50)
-# 	location = models.CharField("location", max_length=50)
-# 	start_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-# 	finish_time = models.DateTimeField(auto_now=False, auto_now_add=False,)
-# 	attendees = ArrayField
-# 	attending = ArrayField
-# 	attendance_required = models 
+class Event(models.Model):
+	organiser = models.CharField("organiser", max_length=50)
+	event_name = models.CharField("event_name", max_length=50)
+	location = models.CharField("location", max_length=50)
+	start_time = models.DateTimeField(null=True, blank=True)
+	finish_time = models.DateTimeField(null=True, blank=True)
+	attendees = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+	attending = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+	attendance_required = models.BooleanField(default=False)
+
+
+
+class Attempt(models.Model):
+	username = models.CharField("username", max_length=50)
+	event_id = models.IntegerField("event_id")
+	created = models.DateTimeField(auto_add_now=True)
+	time_on_screen = models.DateTimeField(null=True, blank=True)
+	date_on_screen = models.DateTimeField(null=True, blank=True)
