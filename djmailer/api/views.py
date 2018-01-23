@@ -77,6 +77,8 @@ class SubscriberViewSet(ModelViewSet):
 def view_subscribers(request, username):
 	
 	data = Subscriber.objects.filter(email=username)
+
+	print(data)
 	serialized = SubscriberSerializer(data, many=True)
 
 	return Response(serialized)
