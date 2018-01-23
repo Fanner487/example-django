@@ -53,16 +53,27 @@ class AttemptView(ListCreateAPIView):
 
 	def post(self, request):
 
-		print("\n\niIn post\n\n")
+		print("\n\nIn post\n\n")
 
 		serializer = AttemptSerializer(data=request.data)
 
 		if serializer.is_valid():
 
+			attempt_instance = Attempt.objects.create(**serializer.data)
+
 			print(serializer.data["username"])
 			print(serializer.data["event_id"])
 
-			attempt_instance = Attempt.objects.create(**serializer.data)
+			# Checks go here
+
+			event_id = serializer.data["event_id"]
+			username = serializer.data["username"]
+			event = Event.objects.get(event_id=event_id)
+
+			event.attending.append(username)
+
+			event.save()
+
 
 			return Response({"message": "Created attempt {}".format(attempt_instance.id)})
 		else:
