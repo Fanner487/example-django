@@ -68,7 +68,7 @@ class AttemptView(ListCreateAPIView):
 
 			event_id = serializer.data["event_id"]
 			username = serializer.data["username"]
-			event = Event.objects.get(event_id=event_id)
+			event = Event.objects.get(id=event_id)
 
 			event.attending.append(username)
 
