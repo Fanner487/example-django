@@ -2,12 +2,13 @@ from django.conf.urls import url
 from rest_framework.routers import SimpleRouter
 
 # from .views import SubscriberView
-from .views import SubscriberViewSet
+from .views import SubscriberViewSet, EventViewSet
 from .views import login, register, view_subscribers
 # from .views import hello_world
 
 router = SimpleRouter()
 router.register("subscribers", SubscriberViewSet)
+router.register("events", EventViewSet)
 
 
 

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from rest_framework.viewsets import ModelViewSet
-from .serializers import SubscriberSerializer
+from .serializers import SubscriberSerializer, EventSerializer, AttemptSerializer
 from .models import Subscriber
 from rest_framework.generics import ListCreateAPIView
 
@@ -17,6 +17,13 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 # Create your views here.
+
+class EventViewSet(ModelViewSet):
+
+	serializer_class = EventSerializer
+	queryset = Event.objects.all()
+
+	
 
 class SubscriberViewSet(ModelViewSet):
 
