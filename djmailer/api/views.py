@@ -25,6 +25,13 @@ class EventViewSet(ModelViewSet):
 
 
 
+class AttemptViewSet(ModelViewSet):
+
+	serializer_class = AttemptSerializer
+	queryset = Attempt.objects.all()
+
+
+
 class SubscriberViewSet(ModelViewSet):
 
 	serializer_class = SubscriberSerializer
