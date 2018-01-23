@@ -11,7 +11,7 @@ class Subscriber(models.Model):
 	age = models.IntegerField("Age")
 	email = models.EmailField("Email")
 	created = models.DateTimeField(null=True, blank=True)
-	attendees = ArrayField(models.CharField(max_length=50), blank=True)
+	attendees = ArrayField(models.CharField(max_length=50), blank=True, null=True)
 	# created = models.DateTimeField(null=True, blank=True, input_formats=["%d/%m/%Y %H:%M:%S"])
 
 
