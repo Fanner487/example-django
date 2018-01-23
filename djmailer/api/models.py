@@ -10,8 +10,8 @@ class Subscriber(models.Model):
 	name = models.CharField("Name", max_length=50)
 	age = models.IntegerField("Age")
 	email = models.EmailField("Email")
-	# created = models.DateTimeField(null=True, blank=True)
-	created = models.DateTimeField(null=True, blank=True, input_formats=["%d/%m/%Y %H:%M:%S"])
+	created = models.DateTimeField(null=True, blank=True)
+	# created = models.DateTimeField(null=True, blank=True, input_formats=["%d/%m/%Y %H:%M:%S"])
 
 
 
