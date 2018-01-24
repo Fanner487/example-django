@@ -31,10 +31,14 @@ class EventSerializer(serializers.ModelSerializer):
 		username= data.get('organiser').strip()
 		start_time = data.get('start_time')
 		end_time = data.get('finish_time')
+		attendees = data.get('attendees')
 
 		print("Start time: " + str(start_time))
 		print("End time: " + str(end_time))
 		print("Attending: " + str(data.get('attending')))
+
+		for attendee in attendees:
+			print(attendee)
 
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
