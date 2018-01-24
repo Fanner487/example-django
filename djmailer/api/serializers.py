@@ -32,8 +32,8 @@ class EventSerializer(serializers.ModelSerializer):
 		start_time = data.get('start_time')
 		end_time = data.get('end_time')
 
-		print("Start time: " + start_time)
-		print("End time: " + end_time)
+		print("Start time: " + str(start_time))
+		print("End time: " + str(end_time))
 
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
