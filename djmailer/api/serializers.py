@@ -9,7 +9,7 @@ class SubscriberSerializer(serializers.ModelSerializer):
 	def validate(self, data):
 
 		if not data.get('name') == 'Eamon Tang':
-			raise serializers.ValidationError("Wrong name")
+			raise serializers.ValidationError("Wrong name nigguh")
 		else:
 			print("\n\nValue:" +  data['name'] + "\n\n")
 		
