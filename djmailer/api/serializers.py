@@ -13,8 +13,8 @@ class SubscriberSerializer(serializers.ModelSerializer):
 
 		def validate(self, data):
 
-			if not data.get('name'):
-				raise serializers.ValidationError("Cannot be blank")
+			if not data.get('name') == 'Eamon Tang':
+				raise serializers.ValidationError("Wrong name")
 			else:
 				print("\n\nValue:" +  data['name'] + "\n\n")
 			
