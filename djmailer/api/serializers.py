@@ -28,9 +28,11 @@ class EventSerializer(serializers.ModelSerializer):
 
 	def validate(self, data):
 
-		users = User.objects.filter(username=data.get('organiser'))
+		username= data.get('organiser').strip()
 		start_time = data.get('start_time')
 		end_time = data.get('end_time')
+
+		users = User.objects.filter(username=username)
 
 		# Checks if user exists
 		if not users.exists():

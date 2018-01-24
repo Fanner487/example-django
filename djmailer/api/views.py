@@ -187,8 +187,3 @@ def verify_unique_username_email(username, email):
 		else:
 			return False, "null"
 
-
-
-
-
-
