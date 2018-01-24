@@ -11,6 +11,17 @@ class SubscriberSerializer(serializers.ModelSerializer):
 		fields = "__all__"
 		# exclude = ('created',)
 
+		def validate(self, data):
+
+			if not data['name']:
+				raise serializers.ValidationError("Cannot be blank")
+			else:
+				print("\n\nValue:" +  data['name'] + "\n\n")
+			
+			return data
+
+
+
 
 
 
