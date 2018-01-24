@@ -34,6 +34,7 @@ class EventSerializer(serializers.ModelSerializer):
 
 		print("Start time: " + str(start_time))
 		print("End time: " + str(end_time))
+		print("Attending: " + data.get('attending'))
 
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
@@ -46,7 +47,7 @@ class EventSerializer(serializers.ModelSerializer):
 		if start_time > end_time:
 			raise serializers.ValidationError("Invalid time entry")
 
-		if not data.get('attending'):
+		if data.get('attending'):
 			raise serializers.ValidationError("Attending must be empty")
 		
 		return data
