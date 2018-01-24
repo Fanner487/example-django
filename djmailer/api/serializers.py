@@ -30,7 +30,7 @@ class EventSerializer(serializers.ModelSerializer):
 
 		username= data.get('organiser').strip()
 		start_time = data.get('start_time')
-		end_time = data.get('end_time')
+		end_time = data.get('finish_time')
 
 		print("Start time: " + str(start_time))
 		print("End time: " + str(end_time))
