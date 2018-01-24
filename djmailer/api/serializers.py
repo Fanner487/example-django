@@ -51,7 +51,7 @@ class EventSerializer(serializers.ModelSerializer):
 			raise serializers.ValidationError("Invalid time entry")
 
 		for attendee in attendees:
-			user = User.objects.filter(username__iexact=attendee)
+			user = User.objects.filter(username__iexact=attendee.strip())
 			
 			if not user.exists():
 				serializers.ValidationError(attendee + "does not exist")
