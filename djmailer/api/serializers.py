@@ -13,7 +13,7 @@ class SubscriberSerializer(serializers.ModelSerializer):
 
 		def validate(self, data):
 
-			if not data['name']:
+			if not data.get('name'):
 				raise serializers.ValidationError("Cannot be blank")
 			else:
 				print("\n\nValue:" +  data['name'] + "\n\n")
