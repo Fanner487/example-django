@@ -38,13 +38,16 @@ class EventSerializer(serializers.ModelSerializer):
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
 
-		# Checks if user exists
+		# # Checks if user exists
 		# if not users.exists():
 		# 	raise serializers.ValidationError("User does not exist")
 
 		# Throw if start time after end_time
 		if start_time > end_time:
 			raise serializers.ValidationError("Invalid time entry")
+
+		if not data.get('attending'):
+			raise serializers.ValidationError("Attending must be empty")
 		
 		return data
 
