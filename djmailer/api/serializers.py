@@ -30,14 +30,12 @@ class EventSerializer(serializers.ModelSerializer):
 
 		username= data.get('organiser').strip()
 		start_time = data.get('start_time')
-		end_time = data.get('finish_time')
+		finish_time = data.get('finish_time')
 		attendees = data.get('attendees')
 
 		print("Start time: " + str(start_time))
-		print("End time: " + str(end_time))
+		print("End time: " + str(finish_time))
 		print("Attending: " + str(data.get('attending')))
-
-		
 
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
@@ -46,17 +44,18 @@ class EventSerializer(serializers.ModelSerializer):
 		# if not users.exists():
 		# 	raise serializers.ValidationError("User does not exist")
 
-		# Throw if start time after end_time
-		if start_time > end_time:
+		# Throw if start time after finish_time
+		if start_time > finish_time:
 			raise serializers.ValidationError("Invalid time entry")
 
+		# Checks every username in attendee list
 		for attendee in attendees:
 			user = User.objects.filter(username__iexact=attendee.strip())
 			
 			if not user.exists():
-				raise serializers.ValidationError(attendee + "does not exist")
+				raise serializers.ValidationError(attendee + " does not exist")
 
-
+		# Attending must be empty
 		if data.get('attending'):
 			raise serializers.ValidationError("Attending must be empty")
 		
