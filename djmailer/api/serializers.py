@@ -154,7 +154,7 @@ def user_is_attendee(username, event_id):
 	else:
 		return False
 
-def verify_scan(event_id, username, time_on_screen, date_on_screen):
+def verify_scan(username, event_id, time_on_screen, date_on_screen):
 	print("bleh")
 
 	event = Event.objects.get(id=event_id)
