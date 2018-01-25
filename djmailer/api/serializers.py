@@ -29,19 +29,19 @@ class EventSerializer(serializers.ModelSerializer):
 
 	def validate(self, data):
 
-		utc = pytz.UTC
+		utc = pytz.UTC # using timezomes for time checking
 
 		username= data.get('organiser').strip()
 		start_time = data.get('start_time').replace(tzinfo=utc)
 		finish_time = data.get('finish_time').replace(tzinfo=utc)
 		attendees = data.get('attendees')
+		time_now = datetime.now().replace(tzinfo=utc)
 
 
 
 		print("Start time: " + str(start_time))
 		print("End time: " + str(finish_time))
 		print("Attending: " + str(data.get('attending')))
-		print(datetime.now())
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
@@ -51,7 +51,7 @@ class EventSerializer(serializers.ModelSerializer):
 		if start_time >= finish_time:
 			raise serializers.ValidationError("Invalid time entry")
 
-		if start_time < datetime.now().replace(tzinfo=utc) or finish_time < datetime.now().replace(tzinfo=utc):
+		if start_time < time_now or finish_time < time_now:
 			raise serializers.ValidationError("Time must be in future")
 
 		# Checks every username in attendee list
