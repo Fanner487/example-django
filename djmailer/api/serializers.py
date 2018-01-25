@@ -83,7 +83,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		username = data.get('username').strip()
 		event_id = data.get('event_id')
-		
+
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
@@ -94,6 +94,8 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 
 		# Checks if event exists
+
+		return data
 
 	class Meta:
 		model = Attempt
