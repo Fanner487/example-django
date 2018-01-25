@@ -190,9 +190,9 @@ def verify_scan(data):
 
 	# Check if there's past entry around same time
 	# past_attempts = Attempt.objects.filter
-	time_interval = data.created.time() - 10
+	time_interval = data.get('created').time() - 10
 	print(time_interval)
-	print(data.created.time())
+	print(data.get('created').time())
 
 	# Check times
 	return verified
