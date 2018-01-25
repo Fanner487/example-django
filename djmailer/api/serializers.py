@@ -60,9 +60,9 @@ class EventSerializer(serializers.ModelSerializer):
 			if not user_exists(attendee.strip()):
 				raise serializers.ValidationError(attendee + " does not exist")
 
-		# Attending must be empty
-		if data.get('attending'):
-			raise serializers.ValidationError("Attending must be empty")
+		# # Attending must be empty
+		# if data.get('attending'):
+		# 	raise serializers.ValidationError("Attending must be empty")
 		
 		return data
 
