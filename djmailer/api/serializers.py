@@ -156,6 +156,7 @@ def add_to_attending(username, event_id):
 	event = Event.objects.get(id=event_id)
 
 	if not username in event.attending:
+		print("Appending user")
 		event.attending.append(username.strip().lower())
 	else:
 		print("user is already in there nigguh")
