@@ -85,6 +85,10 @@ class AttemptSerializer(serializers.ModelSerializer):
 		event_id = data.get('event_id')
 
 
+		print(event_id)
+		print(username)
+
+
 		# Checks if user exists
 		if not user_exists(username.strip()):
 			raise serializers.ValidationError("User does not exist")
