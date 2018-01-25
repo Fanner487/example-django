@@ -85,7 +85,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		event_id = data.get('event_id')
 		time_on_screen = data.get('time_on_screen')
 		date_on_screen = data.get('date_on_screen')
-		created = data['time_created']
+		created = data.get('time_created')
 
 		print("Created: " + str(created))
 
