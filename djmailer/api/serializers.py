@@ -37,8 +37,6 @@ class EventSerializer(serializers.ModelSerializer):
 		attendees = data.get('attendees')
 		time_now = datetime.now().replace(tzinfo=utc)
 
-
-
 		print("Start time: " + str(start_time))
 		print("End time: " + str(finish_time))
 		print("Attending: " + str(data.get('attending')))
@@ -75,14 +73,27 @@ class EventSerializer(serializers.ModelSerializer):
 
 class AttemptSerializer(serializers.ModelSerializer):
 
-	# def validate(self, data):
+	# username = models.CharField("username", max_length=50)
+	# event_id = models.IntegerField("event_id")
+	# created = models.DateTimeField(auto_now_add=True)
+	# time_on_screen = models.DateTimeField(null=True, blank=True)
+	# date_on_screen = models.DateTimeField(null=True, blank=True)
 
-	# 		if not data.get('name') == 'Eamon Tang':
-	# 			raise serializers.ValidationError("Wrong name")
-	# 		else:
-	# 			print("\n\nValue:" +  data['name'] + "\n\n")
-			
-	# 		return data
+	def validate(self, data):
+
+		username = data.get('username').strip()
+		event_id = data.get('event_id')
+		
+
+		# Checks if user exists
+		if not user_exists(username.strip()):
+			raise serializers.ValidationError("User does not exist")
+
+		if not event_exists:
+			raise serializers.ValidationError("Event does not exist")
+
+
+		# Checks if event exists
 
 	class Meta:
 		model = Attempt
@@ -98,7 +109,15 @@ def user_exists(username):
 		return True
 	else:
 		return False
-		
+
+def event_exists(event_id):
+
+	event_count = Attempt.objects.filter(id=event_id).count()
+	
+	if event_count == 1:
+		return True
+	else:
+		return False
 
 
 # class UserSerializer(serializers.ModelSerializer)
