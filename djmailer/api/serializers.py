@@ -140,7 +140,7 @@ def user_is_attendee(username, event_id):
 			event = Event.objects.filter(id=event_id).filter(attendees__icontains=username.strip().lower())
 
 			# if username.strip().lower() in event.attendees:
-			if event.exists()
+			if event.exists():
 				print(username + " exists in " + event_id)
 			else:
 				print(username + " does not exists in " + event_id)
