@@ -40,9 +40,9 @@ class EventSerializer(serializers.ModelSerializer):
 		# ignores case
 		users = User.objects.filter(username__iexact=username)
 
-		# # Checks if user exists
-		# if not users.exists():
-		# 	raise serializers.ValidationError("User does not exist")
+		# Checks if user exists
+		if not users.exists():
+			raise serializers.ValidationError("User does not exist")
 
 		# Throw if start time after finish_time
 		if start_time > finish_time:
