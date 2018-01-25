@@ -83,11 +83,8 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		username = data.get('username').strip()
 		event_id = data.get('event_id')
-
-
-		print(event_id)
-		print(username)
-
+		time_on_screen = data.get('time_on_screen')
+		date_on_screen = data.get('date_on_screen')
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
@@ -95,7 +92,11 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		# Checks if event exists
 		if not event_exists(event_id):
-			raise serializers.ValidationError("Event does not exist")		
+			raise serializers.ValidationError("Event does not exist")
+
+		user_is_attendee(username, event_id)
+
+		# Check if user exists in attendee list and not already in attending 
 
 		return data
 
@@ -128,6 +129,29 @@ def event_exists(event_id):
 		return True
 	else:
 		return False
+
+def user_is_attendee(username, event_id):
+
+	print("\nIN user_is_attendee\n")
+
+	if user_exists(username):
+
+		if event_exists(event_id):
+
+			event = Event.objects.filter(id=event_id)
+
+			if username.strip().lower() in event.attendees:
+				print(username + " exists in " + event_id)
+			else:
+				print(username + " does not exists in " + event_id)
+
+
+		else:
+			return False
+
+	else:
+		return False
+
 
 
 # class UserSerializer(serializers.ModelSerializer)
