@@ -4,7 +4,7 @@ from rest_framework.routers import SimpleRouter
 # from .views import SubscriberView
 from .views import SubscriberViewSet, EventViewSet, AttemptViewSet
 from .views import login, register, view_subscribers
-# from .views import hello_world
+
 
 router = SimpleRouter()
 router.register("subscribers", SubscriberViewSet)

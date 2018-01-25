@@ -117,10 +117,14 @@ def user_exists(username):
 	else:
 		return False
 
+
 def event_exists(event_id):
 
 	event_count = Event.objects.filter(id=event_id).count()
 	
+	event = Event.objects.filter(id=event_id)
+
+	print(event)
 	if event_count == 1:
 		return True
 	else:
