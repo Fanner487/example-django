@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Subscriber, Event, Attempt
 from django.contrib.auth.models import User
 from datetime import datetime 
+import pytz
 
 class SubscriberSerializer(serializers.ModelSerializer):
 	# name = serializers.CharField(max_length=50)
