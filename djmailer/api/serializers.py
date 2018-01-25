@@ -182,6 +182,11 @@ def verify_scan(data):
 	else:
 		verified = False
 
+	# Check times
+	if event_start_time <= new_time_on_screen <= event_finish_time:
+		print("Within time")
+	else:
+		verified = False
 
 
 
