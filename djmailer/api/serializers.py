@@ -48,7 +48,7 @@ class EventSerializer(serializers.ModelSerializer):
 			raise serializers.ValidationError("User does not exist")
 
 		# Throw if start time after finish_time
-		if start_time > finish_time:
+		if start_time >= finish_time:
 			raise serializers.ValidationError("Invalid time entry")
 
 		if start_time < datetime.now().replace(tzinfo=utc) or finish_time < datetime.now().replace(tzinfo=utc):
