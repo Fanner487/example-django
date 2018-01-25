@@ -99,7 +99,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		# Check if user exists in attendee list and not already in attending 
 		user_is_attendee(username, event_id)
 		# If user is attendee, add to list with verification
-		verify_scan(username, event_id, time_on_screen, date_on_screen)
+		verify_scan(data)
 		return data
 
 	class Meta:
@@ -154,27 +154,28 @@ def user_is_attendee(username, event_id):
 	else:
 		return False
 
-def verify_scan(username, event_id, time_on_screen, date_on_screen):
+def verify_scan(data):
 	print("bleh")
 
-	event = Event.objects.get(id=event_id)
+	event = Event.objects.get(id=data.get('id'))
 
 	event_start_date = event.start_time.date()
 	event_finish_date = event.finish_time.date()
 	event_start_time = event.start_time.time()
 	event_finish_time = event.finish_time.time()
 
+	new_date_on_screen = data.get('date_on_screen').date()
+	new_time_on_screen = data.get('time_on_screen').time()
+
 	print("event_start_date: " + str(event_start_date))
 	print("event_finish_date: " + str(event_finish_date))
 	print("event_start_time: " + str(event_start_time))
 	print("event_finish_time: " + str(event_finish_time))
-
-
-	new_date_on_screen = date_on_screen.date()
-	new_time_on_screen = time_on_screen.time()
-
 	print("new_date_on_screen: " + str(new_date_on_screen))
 	print("new_time_on_screen: " + str(new_time_on_screen))
+
+
+
 
 def add_to_attending(username, event_id):
 
