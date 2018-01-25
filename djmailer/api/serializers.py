@@ -169,6 +169,13 @@ def verify_scan(username, event_id, time_on_screen, date_on_screen):
 	print("event_start_time: " + str(event_start_time))
 	print("event_finish_time: " + str(event_finish_time))
 
+
+	new_date_on_screen = date_on_screen.date()
+	new_time_on_screen = time_on_screen.time()
+
+	print("new_date_on_screen: " + str(new_date_on_screen))
+	print("new_time_on_screen: " + str(new_time_on_screen))
+
 def add_to_attending(username, event_id):
 
 	event = Event.objects.get(id=event_id)
