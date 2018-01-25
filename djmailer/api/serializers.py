@@ -29,10 +29,14 @@ class EventSerializer(serializers.ModelSerializer):
 
 	def validate(self, data):
 
+		utc = pytz.UTC
+
 		username= data.get('organiser').strip()
-		start_time = data.get('start_time')
-		finish_time = data.get('finish_time')
+		start_time = data.get('start_time').replace(tzinfo=utc)
+		finish_time = data.get('finish_time').replace(tzinfo=utc)
 		attendees = data.get('attendees')
+
+
 
 		print("Start time: " + str(start_time))
 		print("End time: " + str(finish_time))
