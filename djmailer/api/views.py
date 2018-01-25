@@ -47,37 +47,37 @@ class SubscriberViewSet(ModelViewSet):
 	# 		return Response({"errors": serializer.errors})
 
 
-class AttemptView(ListCreateAPIView):
-	serializer_class = AttemptSerializer
-	queryset = Attempt.objects.all()
+# class AttemptView(ListCreateAPIView):
+# 	serializer_class = AttemptSerializer
+# 	queryset = Attempt.objects.all()
 
-	def post(self, request):
+# 	def post(self, request):
 
-		print("\n\nIn post\n\n")
+# 		print("\n\nIn post\n\n")
 
-		serializer = AttemptSerializer(data=request.data)
+# 		serializer = AttemptSerializer(data=request.data)
 
-		if serializer.is_valid():
+# 		if serializer.is_valid():
 
-			attempt_instance = Attempt.objects.create(**serializer.data)
+# 			attempt_instance = Attempt.objects.create(**serializer.data)
 
-			print(serializer.data["username"])
-			print(serializer.data["event_id"])
+# 			print(serializer.data["username"])
+# 			print(serializer.data["event_id"])
 
-			# Checks go here
+# 			# Checks go here
 
-			event_id = serializer.data["event_id"]
-			username = serializer.data["username"]
-			event = Event.objects.get(id=event_id)
+# 			event_id = serializer.data["event_id"]
+# 			username = serializer.data["username"]
+# 			event = Event.objects.get(id=event_id)
 
-			event.attending.append(username)
+# 			event.attending.append(username)
 
-			event.save()
+# 			event.save()
 
 
-			return Response({"message": "Created attempt {}".format(attempt_instance.id)})
-		else:
-			return Response({"errors": serializer.errors})
+# 			return Response({"message": "Created attempt {}".format(attempt_instance.id)})
+# 		else:
+# 			return Response({"errors": serializer.errors})
 
 # class SubscriberView(ListCreateAPIView):
 

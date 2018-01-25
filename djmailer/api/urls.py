@@ -2,7 +2,7 @@ from django.conf.urls import url
 from rest_framework.routers import SimpleRouter
 
 # from .views import SubscriberView
-from .views import SubscriberViewSet, EventViewSet, AttemptViewSet, AttemptView
+from .views import SubscriberViewSet, EventViewSet, AttemptViewSet
 from .views import login, register, view_subscribers
 # from .views import hello_world
 
