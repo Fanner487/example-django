@@ -148,7 +148,7 @@ def user_is_attendee(username, event_id):
 
 			return True
 		else:
-			print(username + " does not exist in " + str(event_id))
+			print(username + " does not exist in " + str(event_id) + " or is already in there")
 			return False
 
 	else:
@@ -174,6 +174,20 @@ def verify_scan(data):
 	print("new_date_on_screen: " + str(new_date_on_screen))
 	print("new_time_on_screen: " + str(new_time_on_screen))
 
+	bool verified = True
+
+	# Check dates
+	if event_start_date <= new_date_on_screen <= event_finish_date:
+		print("Within date")
+	else:
+		verified = False
+
+	
+
+
+
+	# Check times
+	return verified
 
 
 
