@@ -132,13 +132,12 @@ def event_exists(event_id):
 
 def user_is_attendee(username, event_id):
 
-	print("\nIN user_is_attendee\n")
 
 	if user_exists(username):
 
 		if event_exists(event_id):
 
-			event = Event.objects.filter(id=event_id)
+			event = Event.objects.filter(id=event_id).filter(attendees__icontains=username.strip().lower())
 
 			if username.strip().lower() in event.attendees:
 				print(username + " exists in " + event_id)
