@@ -174,7 +174,7 @@ def verify_scan(data):
 	print("new_date_on_screen: " + str(new_date_on_screen))
 	print("new_time_on_screen: " + str(new_time_on_screen))
 
-	bool verified = True
+	verified = True
 
 	# Check dates
 	if event_start_date <= new_date_on_screen <= event_finish_date:
@@ -182,7 +182,7 @@ def verify_scan(data):
 	else:
 		verified = False
 
-	
+
 
 
 
