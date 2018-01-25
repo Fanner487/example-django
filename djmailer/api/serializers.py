@@ -157,7 +157,7 @@ def user_is_attendee(username, event_id):
 def verify_scan(data):
 	print("bleh")
 
-	event = Event.objects.get(id=data.get('id'))
+	event = Event.objects.get(id=data.get('event_id'))
 
 	event_start_date = event.start_time.date()
 	event_finish_date = event.finish_time.date()
