@@ -45,7 +45,7 @@ class EventSerializer(serializers.ModelSerializer):
 		if start_time > finish_time:
 			raise serializers.ValidationError("Invalid time entry")
 
-		if not start_time > datetime.now() and not finish_time > datetime.now():
+		if start_time < datetime.now() or finish_time < datetime.now():
 			raise serializers.ValidationError("Time must be in future")
 
 		# Checks every username in attendee list
