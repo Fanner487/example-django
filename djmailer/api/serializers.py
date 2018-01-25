@@ -37,11 +37,8 @@ class EventSerializer(serializers.ModelSerializer):
 		print("End time: " + str(finish_time))
 		print("Attending: " + str(data.get('attending')))
 
-		# ignores case
-		users = User.objects.filter(username__iexact=username)
-
 		# Checks if user exists
-		if not users.exists():
+		if not user_exists(username.strip()):
 			raise serializers.ValidationError("User does not exist")
 
 		# Throw if start time after finish_time
@@ -50,9 +47,8 @@ class EventSerializer(serializers.ModelSerializer):
 
 		# Checks every username in attendee list
 		for attendee in attendees:
-			user = User.objects.filter(username__iexact=attendee.strip())
 			
-			if not user.exists():
+			if not user_exists(attendee.strip()):
 				raise serializers.ValidationError(attendee + " does not exist")
 
 		# Attending must be empty
@@ -69,9 +65,6 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class AttemptSerializer(serializers.ModelSerializer):
-	# name = serializers.CharField(max_length=50)
-	# age = serializers.IntegerField()
-	# email = serializers.EmailField()
 
 	# def validate(self, data):
 
@@ -87,6 +80,14 @@ class AttemptSerializer(serializers.ModelSerializer):
 		fields = "__all__"
 		# exclude = ('created',)
 
+
+def user_exists(username):
+	user_count = User.objects.filter(username__iexact=username.strip()).count()
+
+	if user_count == 1:
+		return True
+	else:
+		return False
 		
 
 
