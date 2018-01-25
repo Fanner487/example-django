@@ -85,7 +85,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		event_id = data.get('event_id')
 		time_on_screen = data.get('time_on_screen')
 		date_on_screen = data.get('date_on_screen')
-		created = data['created']
+		created = data['time_created']
 
 		print("Created: " + str(created))
 
@@ -193,7 +193,7 @@ def verify_scan(data):
 
 	# Check if there's past entry around same time
 	# past_attempts = Attempt.objects.filter
-	print(str(data.get('created')))
+	# print(str(data.get('created')))
 	# time_interval = data.get('created').time() - 10
 	# print(time_interval)
 	# print(data.get('created').time())
