@@ -134,7 +134,9 @@ def user_is_attendee(username, event_id):
 
 	if user_exists(username) and event_exists(event_id):
 
-		event = Event.objects.filter(id=event_id).filter(attendees__icontains=username.strip().lower()).exclude(attending__icontains=username.strip().lower())
+		event = Event.objects.filter(id=event_id) \
+			.filter(attendees__icontains=username.strip().lower()) \
+			.exclude(attending__icontains=username.strip().lower())
 
 		# If there's only one entry of event and is exists
 		if event.exists() and event.count() == 1:
