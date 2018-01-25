@@ -94,10 +94,12 @@ class AttemptSerializer(serializers.ModelSerializer):
 		if not event_exists(event_id):
 			raise serializers.ValidationError("Event does not exist")
 
-		user_is_attendee(username, event_id)
+		
 
 		# Check if user exists in attendee list and not already in attending 
-
+		user_is_attendee(username, event_id)
+		# If user is attendee, add to list with verification
+		verify_scan(username, event_id, time_on_screen, date_on_screen)
 		return data
 
 	class Meta:
@@ -143,13 +145,29 @@ def user_is_attendee(username, event_id):
 			print(username + " exists in " + str(event_id))
 			# Add to attending
 			add_to_attending(username, event_id)
+
+			return True
 		else:
-			print(username + " does not exists in " + str(event_id))
+			print(username + " does not exist in " + str(event_id))
 			return False
 
 	else:
 		return False
 
+def verify_scan(event_id, username, time_on_screen, date_on_screen):
+	print("bleh")
+
+	event = Event.objects.get(id=event_id)
+
+	event_start_date = event.start_time.date()
+	event_finish_date = event.finish_time.date()
+	event_start_time = event.start_time.time()
+	event_finish_time = event.finish_time.time()
+
+	print("event_start_date: " + event_start_date)
+	print("event_finish_date: " + event_finish_date)
+	print("event_start_time: " + event_start_time)
+	print("event_finish_time: " + event_finish_time)
 
 def add_to_attending(username, event_id):
 
@@ -158,8 +176,10 @@ def add_to_attending(username, event_id):
 	if not username in event.attending:
 		print("Appending user")
 		event.attending.append(username.strip().lower())
+
+		return True
 	else:
-		print("user is already in there nigguh")
+		return False
 
 	event.save()
 
