@@ -141,6 +141,8 @@ def user_is_attendee(username, event_id):
 		# If there's only one entry of event and is exists
 		if event.exists() and event.count() == 1:
 			print(username + " exists in " + str(event_id))
+			# Add to attending
+			add_to_attending(username, event_id)
 		else:
 			print(username + " does not exists in " + str(event_id))
 			return False
@@ -149,5 +151,15 @@ def user_is_attendee(username, event_id):
 		return False
 
 
+def add_to_attending(username, event_id):
+
+	event = Event.objects.get(id=event_id)
+
+	if not event.attending.contains(username):
+		event.attending.append(username.strip().lower())
+	else:
+		print("user is already in there nigguh")
+
+	event.save()
 
 # class UserSerializer(serializers.ModelSerializer)
