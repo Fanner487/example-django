@@ -94,11 +94,8 @@ class AttemptSerializer(serializers.ModelSerializer):
 			raise serializers.ValidationError("User does not exist")
 
 		# Checks if event exists
-		if not event_exists:
-			raise serializers.ValidationError("Event does not exist")
-
-
-		
+		if not event_exists(event_id):
+			raise serializers.ValidationError("Event does not exist")		
 
 		return data
 
@@ -126,7 +123,7 @@ def event_exists(event_id):
 
 	print(event)
 	print(event_count)
-	
+
 	if event_count == 1:
 		return True
 	else:
