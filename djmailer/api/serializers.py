@@ -41,6 +41,7 @@ class EventSerializer(serializers.ModelSerializer):
 		print("Start time: " + str(start_time))
 		print("End time: " + str(finish_time))
 		print("Attending: " + str(data.get('attending')))
+		print(datetime.now())
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
