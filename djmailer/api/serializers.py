@@ -45,6 +45,9 @@ class EventSerializer(serializers.ModelSerializer):
 		if start_time > finish_time:
 			raise serializers.ValidationError("Invalid time entry")
 
+		if not start_time > datetime.now() and not finish_time > datetime.now():
+			raise serializers.ValidationError("Time must be in future")
+
 		# Checks every username in attendee list
 		for attendee in attendees:
 			
@@ -81,6 +84,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		# exclude = ('created',)
 
 
+# Checks if user exists with only one entry
 def user_exists(username):
 	user_count = User.objects.filter(username__iexact=username.strip()).count()
 
