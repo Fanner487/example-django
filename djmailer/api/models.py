@@ -33,6 +33,17 @@ class Event(models.Model):
 class Attempt(models.Model):
 	username = models.CharField("username", max_length=50)
 	event_id = models.IntegerField("event_id")
-	time_created = models.DateTimeField(default=timezone.now)
+	time_created = models.DateTimeField()
 	time_on_screen = models.DateTimeField()
 	date_on_screen = models.DateTimeField()
+
+
+	def save(self, *args, **kwargs)
+        if not self.id: 
+            self.time_created = timezone.now
+
+            print("\n\nIn save\n\n")
+
+        super(Attempt, self).save(*args, **kwargs)
+
+
