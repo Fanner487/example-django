@@ -143,7 +143,7 @@ def get_events(request, username, event_type):
 
 	else: 
 
-		return Response({"error": "Error"}, status=HTTP_400_BAD_REQUEST)
+		return Response({"error": "Error"}, status=status.HTTP_400_BAD_REQUEST)
 	
 	# data = Subscriber.objects.filter(email=username)
 
