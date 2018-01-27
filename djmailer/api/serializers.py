@@ -216,7 +216,7 @@ def verify_scan(data):
 	date_on_screen = data.get('date_on_screen')
 	last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
 
-	if last_attempt.exists():
+	if last_attempt:
 		print(last_attempt)
 
 
