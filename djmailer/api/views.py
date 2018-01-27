@@ -113,6 +113,8 @@ class SubscriberViewSet(ModelViewSet):
 @api_view(["GET"])
 def get_events(request, username, event_type):
 
+	# past, present, upcoming
+
 	username = username.strip().lower()
 	event_type = event_type.strip().lower()
 
@@ -126,6 +128,9 @@ def get_events(request, username, event_type):
 	elif event_type == "attending":
 
 		attending_events = Event.objects.filter(attendees__icontains=username).order_by('-start_time')
+
+		for event in attending_events:
+			print(event.attendees)
 
 		serialized = EventSerializer(attending_events, many=True)
 
