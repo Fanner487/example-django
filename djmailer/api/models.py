@@ -43,6 +43,8 @@ class Attempt(models.Model):
 			self.time_created = timezone.now()
 
 			print("\n\nIn save\n\n")
+			print(self.time_created)
+
 
 		super(Attempt, self).save(*args, **kwargs)
 
