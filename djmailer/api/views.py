@@ -28,7 +28,6 @@ class EventViewSet(ModelViewSet):
 	queryset = Event.objects.all()
 
 
-
 class AttemptViewSet(ModelViewSet):
 
 	serializer_class = AttemptSerializer
@@ -148,6 +147,20 @@ def filter_events_by_time(events, event_time):
 		filtered_set = []
 
 	return filtered_set
+
+@api_view(["GET"])
+def get_events(request, table):
+
+	if table == "event":
+
+		Event.objects.all().delete()
+
+	if table == "attempt":
+
+		Attempt.objects.all().delete()
+
+
+
 
 @api_view(["GET"])
 def get_events(request, username, event_type, time):
