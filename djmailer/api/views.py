@@ -114,6 +114,7 @@ class SubscriberViewSet(ModelViewSet):
 def filter_events_by_time(events, event_time):
 
 	filtered_set = []
+	time_now = datetime.now().replace(tzinfo=utc)
 
 	if event_time == "all":
 
@@ -123,21 +124,21 @@ def filter_events_by_time(events, event_time):
 
 		for event in events:
 
-			if event.finish_time < datetime.now():
+			if event.finish_time < time_now:
 				filtered_set.append(event)
 
 	elif event_time == "ongoing":
 
 		for event in events:
 
-			if event.start_time <= datetime.now() <= event.finish_time:
+			if event.start_time <= time_now <= event.finish_time:
 				filtered_set.append(event)
 
-	elif event_time == "future":
+	elif event_time == "upcoming":
 
 		for event in events:
 
-			if event.start_time > datetime.now():
+			if event.start_time > time_now:
 				filtered_set.append(event)
 	else:
 		filtered_set = []
