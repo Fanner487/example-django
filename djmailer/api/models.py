@@ -49,36 +49,9 @@ class Attempt(models.Model):
 
 			print(self.time_created)
 			
-			if verify_screen_scan(self):
-				print("Its all good")
-			else:
-				print("Error or something")
+
 
 
 		super(Attempt, self).save(*args, **kwargs)
 
 
-def verify_screen_scan(attempt):
-
-	print(attempt.id)
-	event = Event.objects.get(id=attempt.id)
-
-	verified = True
-
-	# # check user in attendees
-
-	# if not attempt.username not in attendees:
-	# 	verified = False
-
-	# # sign in times
-	# if not event.sign_in_time <= attempt.time_created <= event.finish_time:
-	# 	verified = False
-
-	# if not event.sign_in_time <= attempt.time_on_screen <= event.finish_time:
-	# 	verified = False
-
-	# # Check date
-	# if not event.sign_in_time <= attempt.date_on_screen <= event.finish_time:
-	# 	verified = False
-
-	return verified

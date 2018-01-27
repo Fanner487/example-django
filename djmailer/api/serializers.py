@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Subscriber, Event, Attempt
 from django.contrib.auth.models import User
 from datetime import datetime 
+from django.utils import timezone 
 import pytz
 
 class SubscriberSerializer(serializers.ModelSerializer):
@@ -195,6 +196,12 @@ def verify_scan(data):
 	else:
 		verified = False
 
+	if event_start_time <= timezone.now() <= event_finish_time:
+		print("Within timezone")
+	else:
+		verified = False
+
+
 	# Check if there's past entry around same time
 	# past_attempts = Attempt.objects.filter
 	print(str(data.get('time_created')))
@@ -205,6 +212,30 @@ def verify_scan(data):
 	# Check times
 	return verified
 
+# def verify_screen_scan(attempt):
+
+# 	print(attempt.id)
+# 	event = Event.objects.get(id=attempt.id)
+
+# 	verified = True
+
+# 	# # check user in attendees
+
+# 	# if not attempt.username not in attendees:
+# 	# 	verified = False
+
+# 	# # sign in times
+# 	# if not event.sign_in_time <= attempt.time_created <= event.finish_time:
+# 	# 	verified = False
+
+# 	# if not event.sign_in_time <= attempt.time_on_screen <= event.finish_time:
+# 	# 	verified = False
+
+# 	# # Check date
+# 	# if not event.sign_in_time <= attempt.date_on_screen <= event.finish_time:
+# 	# 	verified = False
+
+# 	return verified
 
 
 def add_to_attending(username, event_id):
