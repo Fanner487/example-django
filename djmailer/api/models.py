@@ -60,7 +60,8 @@ class Attempt(models.Model):
 
 def verify_screen_scan(attempt):
 
-	# event = Event.objects.get(id=attempt.id)
+	print(attempt.id)
+	event = Event.objects.get(id=attempt.id)
 
 	verified = True
 
