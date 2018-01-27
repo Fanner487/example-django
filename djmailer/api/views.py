@@ -155,9 +155,9 @@ def login(request):
 	user = authenticate(username=username, password=password)
 
 	if not user:
-		return Response({"error": "Login failed"}, status=status.HTTP_401_UNAUTHORIZED)
+		return Response(status=status.HTTP_401_UNAUTHORIZED)
 	else: 
-		return Response({"message": "Login successful"})
+		return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
