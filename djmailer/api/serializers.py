@@ -206,9 +206,6 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 
-
-
-
 	return verified
 
 def verify_scan(data):
@@ -234,11 +231,8 @@ def verify_scan(data):
 		if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
 			print("DOUBLE WOO")
 
+			# Put time checking shit in here tomorrow
 
-
-		# event = Event.objects.filter(id=event_id) \
-		# 	.filter(attendees__icontains=username.strip().lower()) \
-		# 	.exclude(attending__icontains=username.strip().lower())
 
 
 	else:
