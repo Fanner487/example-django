@@ -128,7 +128,7 @@ def get_events(request, username, event_type):
 	if event_type == "organising":
 
 		organised_events = Event.objects.filter(organiser__iexact=username)
-		serialized = EventSerializer(data, many=True)
+		serialized = EventSerializer(organised_events, many=True)
 
 		return Response(serialized.data)
 
@@ -136,7 +136,7 @@ def get_events(request, username, event_type):
 
 		attending_events = Event.objects.filter(attendees__icontains=username)
 
-		serialized = EventSerializer(data, many=True)
+		serialized = EventSerializer(attending_events, many=True)
 
 		return Response(serialized.data)
 	
