@@ -3,7 +3,7 @@ from rest_framework.routers import SimpleRouter
 
 # from .views import SubscriberView
 from .views import SubscriberViewSet, EventViewSet, AttemptViewSet
-from .views import login, register, view_subscribers
+from .views import login, register, get_events
 
 
 router = SimpleRouter()
@@ -16,7 +16,8 @@ router.register("attempts", AttemptViewSet)
 urlpatterns = [
     url(r'^login', login, name="login"),
     url(r'^register', register, name="register"),
-    url(r'^profile/(?P<username>[\w.@+-]+)/$', view_subscribers, name="view_subscribers"),
+    url(r'^profile/(?P<username>[\w.@+-]+)/(?P<event_type>[-\w]+)$', get_events, name="get_events"),
+    # url(r'^profile/(?P<username>[\w.@+-]+)/$', view_subscribers, name="view_subscribers"),
     # url(r'^attempts', AttemptView.as_view(), name="attempt")
     # url(r'^register', register, name="register")
     # url(r'^hello', SubscriberView.as_view(), name="subsriber")

@@ -120,14 +120,32 @@ class SubscriberViewSet(ModelViewSet):
 
 
 @api_view(["GET"])
-def view_subscribers(request, username):
+def get_events(request, username, event_type):
+
+	username = username.strip().lower()
+	event_type = event_type.strip().lower()
+
+	if event_type == "organising":
+
+		organised_events = Event.objects.filter(organiser__iexact=username)
+		serialized = EventSerializer(data, many=True)
+
+		return Response(serialized.data)
+
+	elif event_type == "attending":
+
+		attending_events = Event.objects.filter(attendees__icontains=username)
+
+		serialized = EventSerializer(data, many=True)
+
+		return Response(serialized.data)
 	
-	data = Subscriber.objects.filter(email=username)
+	# data = Subscriber.objects.filter(email=username)
 
-	print(data)
-	serialized = SubscriberSerializer(data, many=True)
+	# print(data)
+	# serialized = SubscriberSerializer(data, many=True)
 
-	return Response(serialized.data)
+	# return Response(serialized.data)
 
 
 
