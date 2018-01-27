@@ -143,15 +143,8 @@ def get_events(request, username, event_type):
 
 	else: 
 
-		return Response({"error": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+		return Response(status=status.HTTP_400_BAD_REQUEST)
 	
-	# data = Subscriber.objects.filter(email=username)
-
-	# print(data)
-	# serialized = SubscriberSerializer(data, many=True)
-
-	# return Response(serialized.data)
-
 
 
 @api_view(["POST"])
@@ -162,7 +155,7 @@ def login(request):
 	user = authenticate(username=username, password=password)
 
 	if not user:
-		return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+		return Response({"error": "Login failed"}, status=status.HTTP_401_UNAUTHORIZED)
 	else: 
 		return Response({"message": "Login successful"})
 
