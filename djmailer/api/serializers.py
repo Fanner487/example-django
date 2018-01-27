@@ -169,7 +169,7 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 	event_finish_date = event.finish_time.date()
 	event_start_time = event.start_time.time()
 	event_finish_time = event.finish_time.time()
-	event_sign_in_time = event.sign_in_time
+	# event_sign_in_time = event.sign_in_time.time()
 
 	new_date_on_screen = date_on_screen.date()
 	new_time_on_screen = time_on_screen.time()
@@ -189,7 +189,7 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 	# Check times
-	if event_sign_in_time <= new_time_on_screen <= event_finish_time:
+	if event.sign_in_time.time() <= new_time_on_screen <= event_finish_time:
 		print("Within time")
 	else:
 		verified = False
