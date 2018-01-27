@@ -23,7 +23,7 @@ class Event(models.Model):
 	location = models.CharField("location", max_length=50)
 	start_time = models.DateTimeField()
 	finish_time = models.DateTimeField()
-	# created = models.DateTimeField()
+	sign_in_time = models.DateTimeField()
 	attendees = ArrayField(models.CharField(max_length=50))
 	attending = ArrayField(models.CharField(max_length=50), blank=True, null=True)
 	attendance_required = models.BooleanField(default=False)
@@ -44,6 +44,7 @@ class Attempt(models.Model):
 
 			print("\n\nIn save\n\n")
 			print(self.time_created)
+			print(self.id)
 
 
 		super(Attempt, self).save(*args, **kwargs)
