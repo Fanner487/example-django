@@ -209,7 +209,7 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 
 
 
-	return validated
+	return verified
 
 def verify_scan(data):
 	# username, event_id, time_on_screen, date_on_screen, timestamp
