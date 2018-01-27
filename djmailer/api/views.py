@@ -148,16 +148,6 @@ def filter_events_by_time(events, event_time):
 
 	return filtered_set
 
-@api_view(["GET"])
-def delete_table(request, table):
-
-	if table == "event":
-
-		Event.objects.all().delete()
-
-	if table == "attempt":
-
-		Attempt.objects.all().delete()
 
 
 
@@ -259,4 +249,25 @@ def verify_unique_username_email(username, email):
 			return False, "Username"
 		else:
 			return False, "null"
+
+
+
+@api_view(["GET"])
+def delete_table(request, table):
+
+	if table == "event":
+
+		Event.objects.all().delete()
+
+	if table == "attempt":
+
+		Attempt.objects.all().delete()
+
+	if table == "all":
+
+		Event.objects.all().delete()
+		Attempt.objects.all().delete()
+
+
+	return Response(status=status.HTTP_200_OK)
 
