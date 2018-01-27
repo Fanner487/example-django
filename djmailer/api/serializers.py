@@ -217,7 +217,7 @@ def verify_scan(data):
 	last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
 
 	if last_attempt:
-		print("\n" + last_attempt.time_created + "\n")
+		print("\n" + str(last_attempt.time_created) + "\n")
 
 
 
