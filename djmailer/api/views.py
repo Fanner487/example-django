@@ -128,11 +128,16 @@ def get_events(request, username, event_type):
 	elif event_type == "attending":
 
 		attending_events = Event.objects.filter(attendees__icontains=username).order_by('-start_time')
+		attending_events_filtered = None
 
 		for event in attending_events:
-			print(event.attendees)
 
-		serialized = EventSerializer(attending_events, many=True)
+			if username in event.attendees:
+				
+				attending_events_filtered.add(event)
+
+
+		serialized = EventSerializer(attending_events_filtered, many=True)
 
 		return Response(serialized.data)
 
