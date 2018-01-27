@@ -18,6 +18,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from datetime import datetime
+import pytz
 
 # Create your views here.
 
@@ -113,8 +114,11 @@ class SubscriberViewSet(ModelViewSet):
 
 def filter_events_by_time(events, event_time):
 
-	filtered_set = []
+
+	utc = pytz.UTC # using timezomes for time checking
 	time_now = datetime.now().replace(tzinfo=utc)
+
+	filtered_set = []
 
 	if event_time == "all":
 
