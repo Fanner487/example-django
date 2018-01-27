@@ -139,6 +139,10 @@ def get_events(request, username, event_type):
 		serialized = EventSerializer(attending_events, many=True)
 
 		return Response(serialized.data)
+
+	else: 
+
+		return Response({"error": "Error"}, status=HTTP_401_UNAUTHORIZED)
 	
 	# data = Subscriber.objects.filter(email=username)
 
