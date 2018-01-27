@@ -44,7 +44,7 @@ class Attempt(models.Model):
 
 			print("\n\nIn save\n\n")
 			print(self.time_created)
-			print(self.id)
+			# print(self.id)
 
 
 		super(Attempt, self).save(*args, **kwargs)
