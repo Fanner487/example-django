@@ -39,6 +39,9 @@ class Attempt(models.Model):
 
 
 	def save(self, *args, **kwargs):
+
+		print(args)
+		print(kwargs)
 		if not self.id: 
 			self.time_created = timezone.now()
 
