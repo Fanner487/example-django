@@ -149,7 +149,7 @@ def filter_events_by_time(events, event_time):
 	return filtered_set
 
 @api_view(["GET"])
-def get_events(request, table):
+def delete_table(request, table):
 
 	if table == "event":
 
