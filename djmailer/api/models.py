@@ -40,7 +40,8 @@ class Attempt(models.Model):
 
 	def save(self, *args, **kwargs):
 
-		print(self)
+		print(self.event_id)
+		print(self.time_on_screen)
 		if not self.id: 
 			self.time_created = timezone.now()
 
