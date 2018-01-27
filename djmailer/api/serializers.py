@@ -161,10 +161,9 @@ def verify_scan(data):
 
 	event = Event.objects.get(id=data.get('event_id'))
 
-	x = Attempt.objects.get(id=data.get('id'))
+	print(data.get('id'))
 
-	for i in x:
-		print(i)
+
 
 	event_start_date = event.start_time.date()
 	event_finish_date = event.finish_time.date()
