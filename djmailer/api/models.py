@@ -38,7 +38,7 @@ class Attempt(models.Model):
 	date_on_screen = models.DateTimeField()
 
 
-	def save(self, *args, **kwargs)
+	def save(self, *args, **kwargs):
         if not self.id: 
             self.time_created = timezone.now
 
