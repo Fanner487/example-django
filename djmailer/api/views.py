@@ -32,20 +32,10 @@ class AttemptViewSet(ModelViewSet):
 	queryset = Attempt.objects.all()
 
 
-
 class SubscriberViewSet(ModelViewSet):
 
 	serializer_class = SubscriberSerializer
 	queryset = Subscriber.objects.all()
-
-	# def create(self, request):
-	# 	serializer = SubscriberSerializer(data=request.data)
-
-	# 	if serializer.is_valid():
-	# 		subscriber_instance = Subscriber.objects.create(**serializer.data)
-	# 		return Response({"message": "Created subscriber {}".format(subscriber_instance.id)})
-	# 	else:
-	# 		return Response({"errors": serializer.errors})
 
 
 # class AttemptView(ListCreateAPIView):
@@ -128,14 +118,14 @@ def get_events(request, username, event_type):
 
 	if event_type == "organising":
 
-		organised_events = Event.objects.filter(organiser__iexact=username)
+		organised_events = Event.objects.filter(organiser__iexact=username).order_by('-start_time')
 		serialized = EventSerializer(organised_events, many=True)
 
 		return Response(serialized.data)
 
 	elif event_type == "attending":
 
-		attending_events = Event.objects.filter(attendees__icontains=username)
+		attending_events = Event.objects.filter(attendees__icontains=username).order_by('-start_time')
 
 		serialized = EventSerializer(attending_events, many=True)
 
