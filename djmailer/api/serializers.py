@@ -128,8 +128,6 @@ def event_exists(event_id):
 	
 	event = Event.objects.filter(id=event_id)
 
-	print(event)
-	print(event_count)
 
 	if event_count == 1:
 		return True
