@@ -198,7 +198,7 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 	# Need to add the timezone back in
 
 
-	Check through timestamp
+	# Check through timestamp
 	if event.start_time <= timezone.now() <= event.finish_time:
 
 		print("Within timezone")
