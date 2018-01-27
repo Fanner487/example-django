@@ -196,7 +196,7 @@ def verify_scan(data):
 	else:
 		verified = False
 
-	if event_start_time <= datetime.now() <= event_finish_time:
+	if event.start_time <= timezone.now() <= event.finish_time:
 		print("Within timezone")
 	else:
 		verified = False
