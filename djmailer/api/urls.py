@@ -16,7 +16,7 @@ router.register("attempts", AttemptViewSet)
 urlpatterns = [
     url(r'^login', login, name="login"),
     url(r'^register', register, name="register"),
-    url(r'^profile/(?P<username>[\w.@+-]+)/(?P<event_type>[-\w]+)/$', get_events, name="get_events"),
+    url(r'^profile/(?P<username>[\w.@+-]+)/(?P<event_type>[-\w]+)/(?P<time>[-\w]+)/$', get_events, name="get_events"),
     # url(r'^profile/(?P<username>[\w.@+-]+)/$', view_subscribers, name="view_subscribers"),
     # url(r'^attempts', AttemptView.as_view(), name="attempt")
     # url(r'^register', register, name="register")

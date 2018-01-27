@@ -17,6 +17,8 @@ from django.shortcuts import render
 
 from django.contrib.auth.models import User
 
+from datetime import datetime
+
 # Create your views here.
 
 class EventViewSet(ModelViewSet):
@@ -109,9 +111,41 @@ class SubscriberViewSet(ModelViewSet):
 # 		else:
 # 			return Response({"message": "Hello {}!".format(name)})
 
+def filter_events_by_time(events, event_time):
+
+	filtered_set = []
+
+	if event_time == "all":
+
+		filtered_set = events
+
+	elif event_time == "past":
+
+		for event in events:
+
+			if event.finish_time < datetime.now():
+				filtered_set.append(event)
+
+	elif event_time == "ongoing":
+
+		for event in events:
+
+			if event.start_time <= datetime.now() <= event.finish_time:
+				filtered_set.append(event)
+
+	elif event_time == "future":
+
+		for event in events:
+
+			if event.start_time > datetime.now():
+				filtered_set.append(event)
+	else:
+		filtered_set = []
+
+	return filtered_set
 
 @api_view(["GET"])
-def get_events(request, username, event_type):
+def get_events(request, username, event_type, time):
 
 	# past, present, upcoming
 
@@ -121,7 +155,10 @@ def get_events(request, username, event_type):
 	if event_type == "organising":
 
 		organised_events = Event.objects.filter(organiser__iexact=username).order_by('-start_time')
-		serialized = EventSerializer(organised_events, many=True)
+
+		time_filtered_events = filter_events_by_time(organised_events, time)
+
+		serialized = EventSerializer(time_filtered_events, many=True)
 
 		return Response(serialized.data)
 
@@ -130,14 +167,16 @@ def get_events(request, username, event_type):
 		attending_events = Event.objects.filter(attendees__icontains=username).order_by('-start_time')
 		attending_events_filtered = []
 
+		# filters for exact matches instead of (LIKE %username%) in contains statement in query
 		for event in attending_events:
 
 			if username in event.attendees:
 				
 				attending_events_filtered.append(event)
 
+		time_filtered_events = filter_events_by_time(attending_events_filtered, time)
 
-		serialized = EventSerializer(attending_events_filtered, many=True)
+		serialized = EventSerializer(time_filtered_events, many=True)
 
 		return Response(serialized.data)
 
