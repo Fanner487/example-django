@@ -60,24 +60,24 @@ class Attempt(models.Model):
 
 def verify_screen_scan(attempt):
 
-	event = Event.objects.get(id=attempt.id)
+	# event = Event.objects.get(id=attempt.id)
 
 	verified = True
 
-	# check user in attendees
+	# # check user in attendees
 
-	if not attempt.username not in attendees:
-		verified = False
+	# if not attempt.username not in attendees:
+	# 	verified = False
 
-	# sign in times
-	if not event.sign_in_time <= attempt.time_created <= event.finish_time:
-		verified = False
+	# # sign in times
+	# if not event.sign_in_time <= attempt.time_created <= event.finish_time:
+	# 	verified = False
 
-	if not event.sign_in_time <= attempt.time_on_screen <= event.finish_time:
-		verified = False
+	# if not event.sign_in_time <= attempt.time_on_screen <= event.finish_time:
+	# 	verified = False
 
-	# Check date
-	if not event.sign_in_time <= attempt.date_on_screen <= event.finish_time:
-		verified = False
+	# # Check date
+	# if not event.sign_in_time <= attempt.date_on_screen <= event.finish_time:
+	# 	verified = False
 
 	return verified
