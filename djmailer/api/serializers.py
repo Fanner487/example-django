@@ -194,12 +194,16 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 	else:
 		verified = False
 
-	# Check through timestamp
-	if event.start_time <= timezone.now() <= event.finish_time:
 
-		print("Within timezone")
-	else:
-		verified = False
+	# Need to add the timezone back in
+
+
+	# Check through timestamp
+	# if event.start_time <= timezone.now() <= event.finish_time:
+
+	# 	print("Within timezone")
+	# else:
+	# 	verified = False
 
 
 
@@ -226,6 +230,9 @@ def verify_scan(data):
 
 
 		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
+
+		if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
+			print("DOUBLE WOO")
 
 
 
