@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from datetime import datetime 
+from django.utils import timezone
 
 # Create your models here.
 class Subscriber(models.Model):
@@ -32,6 +33,6 @@ class Event(models.Model):
 class Attempt(models.Model):
 	username = models.CharField("username", max_length=50)
 	event_id = models.IntegerField("event_id")
-	time_created = models.DateTimeField(default=datetime.now())
+	time_created = models.DateTimeField(default=timezone.now())
 	time_on_screen = models.DateTimeField()
 	date_on_screen = models.DateTimeField()
