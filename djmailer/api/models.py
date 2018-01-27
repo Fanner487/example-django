@@ -20,9 +20,10 @@ class Event(models.Model):
 	organiser = models.CharField("organiser", max_length=50)
 	event_name = models.CharField("event_name", max_length=50)
 	location = models.CharField("location", max_length=50)
-	start_time = models.DateTimeField(null=True, blank=True)
-	finish_time = models.DateTimeField(null=True, blank=True)
-	attendees = ArrayField(models.CharField(max_length=50), blank=True, null=True)
+	start_time = models.DateTimeField()
+	finish_time = models.DateTimeField()
+	# created = models.DateTimeField()
+	attendees = ArrayField(models.CharField(max_length=50))
 	attending = ArrayField(models.CharField(max_length=50), blank=True, null=True)
 	attendance_required = models.BooleanField(default=False)
 
@@ -31,6 +32,6 @@ class Event(models.Model):
 class Attempt(models.Model):
 	username = models.CharField("username", max_length=50)
 	event_id = models.IntegerField("event_id")
-	time_created = models.DateTimeField(auto_now_add=True)
-	time_on_screen = models.DateTimeField(null=True, blank=True)
-	date_on_screen = models.DateTimeField(null=True, blank=True)
+	time_created = models.DateTimeField(default=datetime.now())
+	time_on_screen = models.DateTimeField()
+	date_on_screen = models.DateTimeField()
