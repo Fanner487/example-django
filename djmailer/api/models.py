@@ -40,7 +40,7 @@ class Attempt(models.Model):
 
 	def save(self, *args, **kwargs):
 		if not self.id: 
-			self.time_created = timezone.now
+			self.time_created = timezone.now()
 
 			print("\n\nIn save\n\n")
 
