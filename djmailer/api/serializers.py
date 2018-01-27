@@ -158,22 +158,21 @@ def user_is_attendee(username, event_id):
 	else:
 		return False
 
-def verify_scan(data):
-	print("bleh")
+def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timestamp):
 
-	event = Event.objects.get(id=data.get('event_id'))
+	verified = True
 
-	print(data.get('id'))
-
+	event = Event.objects.get(id=event_id)
 
 
 	event_start_date = event.start_time.date()
 	event_finish_date = event.finish_time.date()
 	event_start_time = event.start_time.time()
 	event_finish_time = event.finish_time.time()
+	event_sign_in_time = event.sign_in_time
 
-	new_date_on_screen = data.get('date_on_screen').date()
-	new_time_on_screen = data.get('time_on_screen').time()
+	new_date_on_screen = date_on_screen.date()
+	new_time_on_screen = time_on_screen.time()
 
 	print("event_start_date: " + str(event_start_date))
 	print("event_finish_date: " + str(event_finish_date))
@@ -182,7 +181,6 @@ def verify_scan(data):
 	print("new_date_on_screen: " + str(new_date_on_screen))
 	print("new_time_on_screen: " + str(new_time_on_screen))
 
-	verified = True
 
 	# Check dates
 	if event_start_date <= new_date_on_screen <= event_finish_date:
@@ -191,51 +189,57 @@ def verify_scan(data):
 		verified = False
 
 	# Check times
-	if event_start_time <= new_time_on_screen <= event_finish_time:
+	if event_sign_in_time <= new_time_on_screen <= event_finish_time:
 		print("Within time")
 	else:
 		verified = False
 
+	# Check through timestamp
 	if event.start_time <= timezone.now() <= event.finish_time:
+
 		print("Within timezone")
 	else:
 		verified = False
 
 
-	# Check if there's past entry around same time
-	# past_attempts = Attempt.objects.filter
-	print(str(data.get('time_created')))
-	# time_interval = data.get('created').time() - 10
-	# print(time_interval)
-	# print(data.get('created').time())
 
-	# Check times
-	return verified
 
-# def verify_screen_scan(attempt):
 
-# 	print(attempt.id)
-# 	event = Event.objects.get(id=attempt.id)
+	return validated
 
-# 	verified = True
+def verify_scan(data):
+	# username, event_id, time_on_screen, date_on_screen, timestamp
 
-# 	# # check user in attendees
+	username = data.get('username')
+	event_id = data.get('event_id')
+	time_on_screen = data.get('time_on_screen')
+	date_on_screen = data.get('date_on_screen')
+	last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).sort_by("-time_created").first()
 
-# 	# if not attempt.username not in attendees:
-# 	# 	verified = False
+	if last_attempt.exists():
+		print last_attempt
 
-# 	# # sign in times
-# 	# if not event.sign_in_time <= attempt.time_created <= event.finish_time:
-# 	# 	verified = False
 
-# 	# if not event.sign_in_time <= attempt.time_on_screen <= event.finish_time:
-# 	# 	verified = False
 
-# 	# # Check date
-# 	# if not event.sign_in_time <= attempt.date_on_screen <= event.finish_time:
-# 	# 	verified = False
+	if attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
+		print("WOoooo")
 
-# 	return verified
+
+		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).sort_by("-time_created").first()
+
+
+
+		# event = Event.objects.filter(id=event_id) \
+		# 	.filter(attendees__icontains=username.strip().lower()) \
+		# 	.exclude(attending__icontains=username.strip().lower())
+
+
+	else:
+		print("Fuuuucckkk")
+
+
+
+
 
 
 def add_to_attending(username, event_id):
