@@ -205,8 +205,8 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 	# Check screen time within timestamp delta
-	print(new_time_on_screen.time())
-	print(timestamp.time().strftime("%H:%M:%S"))
+	print(time_on_screen.time())
+	print(timestamp.time())
 	new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
 
 	time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
