@@ -138,12 +138,11 @@ def verify_scan(data):
 			# Verifies second attempt for event
 			if valid_attempt_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
 
-				print("Difference: " + str((last_attempt.time_created - created).total_seconds()) + " seconds")
-
 				# Check if time within 10 seconds of last
 				seconds_difference = (created - last_attempt.time_created).total_seconds()
 				delta = 10
 
+				# Makes sure that the current time after alst attempt time and within delta
 				if 0 < seconds_difference < delta :
 
 					print("Two attempts within delta")
@@ -154,6 +153,8 @@ def verify_scan(data):
 			else:
 				verified = False
 		else:
+
+			print("No last attempt")
 			verified = False
 
 	else:
