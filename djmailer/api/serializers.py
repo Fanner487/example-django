@@ -99,11 +99,13 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		# Check if user exists in attendee list and not already in attending 
 		if not user_is_attendee(username, event_id):
-			raise serializers.ValidationError("User is not in attendees")
+			raise serializers.ValidationError("User is not in attendees or alread in list")
 
 
 		# If user is attendee, add to list with verification
 		verify_scan(data)
+
+
 		return data
 
 	class Meta:
@@ -140,6 +142,7 @@ def user_is_attendee(username, event_id):
 
 	if user_exists(username) and event_exists(event_id):
 
+		# Checks if user in attendee and not alreadt in attending
 		event = Event.objects.filter(id=event_id) \
 			.filter(attendees__icontains=username.strip().lower()) \
 			.exclude(attending__icontains=username.strip().lower())
@@ -147,9 +150,6 @@ def user_is_attendee(username, event_id):
 		# If there's only one entry of event and is exists
 		if event.exists() and event.count() == 1:
 			print(username + " exists in " + str(event_id))
-			# Add to attending
-			# add_to_attending(username, event_id)
-
 			return True
 		else:
 			print(username + " does not exist in " + str(event_id) + " or is already in there")
@@ -163,7 +163,6 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 	verified = True
 
 	event = Event.objects.get(id=event_id)
-
 
 	event_start_date = event.start_time.date()
 	event_finish_date = event.finish_time.date()
@@ -195,9 +194,6 @@ def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 
-	# Need to add the timezone back in
-
-
 	# Check through timestamp
 	if event.start_time <= timezone.now() <= event.finish_time:
 
@@ -217,13 +213,8 @@ def verify_scan(data):
 	date_on_screen = data.get('date_on_screen')
 	last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
 
-	if last_attempt:
-		print("\n" + str(last_attempt.time_created) + "\n")
-
-
 	if attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
 		print("WOoooo")
-
 
 		# Check for last event
 		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
@@ -237,11 +228,14 @@ def verify_scan(data):
 				print("Time created: " + str(last_attempt.time_created))
 				print(str((timezone.now() - last_attempt.time_created).total_seconds()))
 
-				add_to_attending(username, event_id)
+				seconds_difference = (timezone.now() - last_attempt.time_created).total_seconds()
+				delta = 10
+
+				if seconds_difference < delta:
+
+					add_to_attending(username, event_id)
 
 				# Put time checking shit in here tomorrow
-
-
 
 	else:
 		print("Fuuuucckkk")
