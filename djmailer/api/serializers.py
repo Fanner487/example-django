@@ -133,7 +133,6 @@ def verify_scan(data):
 
 	# Verifies current attempt
 	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, current_created):
-		print("Woooo")
 
 		# Gets last attempt
 		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
