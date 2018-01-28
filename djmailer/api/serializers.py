@@ -216,7 +216,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 
 
 	# Check through timestamp
-	if event.start_time <= timestamp <= event.finish_time:
+	if event.sign_in_time <= timestamp <= event.finish_time:
 
 		print("Within timezone")
 	else:
