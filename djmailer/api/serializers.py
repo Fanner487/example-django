@@ -81,6 +81,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		time_on_screen = data.get('time_on_screen')
 		date_on_screen = data.get('date_on_screen')
 
+		# Setting time_created to now
 		data['time_created'] = now 
 
 
@@ -96,8 +97,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		if not event_exists(event_id):
 			raise serializers.ValidationError("Event does not exist")
 
-		
-
+	
 		# Check if user exists in attendee list and not already in attending 
 		if not user_is_attendee(username, event_id):
 			raise serializers.ValidationError("User is not in attendees or already in list")
@@ -122,11 +122,12 @@ def verify_scan(data):
 	event_id = data.get('event_id')
 	time_on_screen = data.get('time_on_screen')
 	date_on_screen = data.get('date_on_screen')
+	created = data.get('time_created')
 
 	verified = True
 
 	# Verifies current attempt
-	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
+	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, created):
 		print("Woooo")
 
 		# Gets last attempt
