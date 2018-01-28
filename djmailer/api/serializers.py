@@ -205,7 +205,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	time_difference = (timestamp - combined_time).total_seconds()
 	print(time_difference)
 
-	if time_difference < 5:
+	if time_difference < 10:
 		print("screen time withing delta")
 	else:
 		verified = False
