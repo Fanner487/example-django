@@ -79,7 +79,6 @@ class AttemptSerializer(serializers.ModelSerializer):
 	def validate(self, data):
 
 		now = timezone.now()
-		print("Time now: " + str(now))
 
 		username = data.get('username').strip()
 		event_id = data.get('event_id')
@@ -91,8 +90,9 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 
 		created = data.get('time_created')
+		print("\n\n\n----------NEW ATTEMPT---------\n" )
 
-		print("Created: " + str(created))
+		print("\n\n\n\nCreated: " + str(created))
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
@@ -179,7 +179,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	combined_time = datetime(year=date_on_screen.year, month=date_on_screen.month, day=date_on_screen.day, 
 		hour=time_on_screen.hour, minute=time_on_screen.minute, second=time_on_screen.second).replace(tzinfo=utc)
 
-	print("\n\nCombined time: " + str(combined_time))
+	print("\nCombined time: " + str(combined_time))
 	print("Event sign in: " + str(event.sign_in_time))
 	print("Event finish: " + str(event.finish_time))
 
