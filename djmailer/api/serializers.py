@@ -194,6 +194,11 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 
 	verified = True
 
+	if event.sign_in_time <= combined_time <= event.finish_time:
+		print("Within new time bro")
+	else:
+		verified = False
+
 	# Check dates from screen
 	if event_start_date <= date_on_screen <= event_finish_date:
 		print("Within date")
