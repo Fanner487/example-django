@@ -6,14 +6,11 @@ from django.utils import timezone
 import pytz
 
 class SubscriberSerializer(serializers.ModelSerializer):
-	# name = serializers.CharField(max_length=50)
-	# age = serializers.IntegerField()
-	# email = serializers.EmailField()
 
 	def validate(self, data):
 
 		if not data.get('name') == 'Eamon Tang':
-			raise serializers.ValidationError("Wrong name nigguh")
+			raise serializers.ValidationError("Wrong name ")
 		else:
 			print("\n\nValue:" +  data['name'] + "\n\n")
 		
@@ -101,7 +98,10 @@ class AttemptSerializer(serializers.ModelSerializer):
 		
 
 		# Check if user exists in attendee list and not already in attending 
-		user_is_attendee(username, event_id)
+		if not user_is_attendee(username, event_id):
+			raise serializers.ValidationError("User is not in attendees")
+
+
 		# If user is attendee, add to list with verification
 		verify_scan(data)
 		return data
