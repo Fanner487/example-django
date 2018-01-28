@@ -148,7 +148,7 @@ def user_is_attendee(username, event_id):
 		if event.exists() and event.count() == 1:
 			print(username + " exists in " + str(event_id))
 			# Add to attending
-			add_to_attending(username, event_id)
+			# add_to_attending(username, event_id)
 
 			return True
 		else:
@@ -262,6 +262,8 @@ def add_to_attending(username, event_id):
 
 		return True
 	else:
+
+		print("Not Appending user")
 		return False
 
 	
