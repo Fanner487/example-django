@@ -258,11 +258,12 @@ def add_to_attending(username, event_id):
 	if not username in event.attending:
 		print("Appending user")
 		event.attending.append(username.strip().lower())
+		event.save()
 
 		return True
 	else:
 		return False
 
-	event.save()
+	
 
 # class UserSerializer(serializers.ModelSerializer)
