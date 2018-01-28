@@ -235,7 +235,7 @@ def verify_scan(data):
 
 				print("Time created now: " + str(timezone.now()))
 				print("Time created: " + str(last_attempt.time_created))
-				print(str(timezone.now() - last_attempt.time_created))
+				print(str((timezone.now() - last_attempt.time_created).total_seconds()))
 
 				# Put time checking shit in here tomorrow
 
