@@ -202,17 +202,17 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	else:
 		verified = False
 
-	# Check dates from screen
-	if event_start_date <= date_on_screen <= event_finish_date:
-		print("Within date")
-	else:
-		verified = False
+	# # Check dates from screen
+	# if event_start_date <= date_on_screen <= event_finish_date:
+	# 	print("Within date")
+	# else:
+	# 	verified = False
 
-	# Check times from screen
-	if event.sign_in_time.time() <= time_on_screen <= event_finish_time:
-		print("Within time")
-	else:
-		verified = False
+	# # Check times from screen
+	# if event.sign_in_time.time() <= time_on_screen <= event_finish_time:
+	# 	print("Within time")
+	# else:
+	# 	verified = False
 
 
 	# Check through timestamp
@@ -223,14 +223,15 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 	# Check screen time within timestamp delta
-	print(time_on_screen)
-	print((timestamp.time()).total_seconds())
-	new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
+	print("\n\n\n")
+	print(combined_time)
+	print(timestamp)
+	# new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
 
-	time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
+	# time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
 
 	# (current_created - last_attempt.time_created).total_seconds()
-	print("Time difference to delta: " + str(time_difference))
+	# print("Time difference to delta: " + str(time_difference))
 
 
 	return verified
