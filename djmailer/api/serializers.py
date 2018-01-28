@@ -226,6 +226,9 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	print("\n\n\n")
 	print(combined_time)
 	print(timestamp)
+
+	time_difference = (timestamp - combined_time).total_seconds()
+	print(time_difference)
 	# new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
 
 	# time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
