@@ -237,6 +237,8 @@ def verify_scan(data):
 				print("Time created: " + str(last_attempt.time_created))
 				print(str((timezone.now() - last_attempt.time_created).total_seconds()))
 
+				add_to_attending(username, event_id)
+
 				# Put time checking shit in here tomorrow
 
 
