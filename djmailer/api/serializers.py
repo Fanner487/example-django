@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Subscriber, Event, Attempt
 from django.contrib.auth.models import User
-from datetime import datetime 
+from datetime import datetime
+from datetime import timedelta
 from django.utils import timezone 
 import pytz
 
@@ -204,7 +205,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 	# Check screen time within timestamp delta
-	new_time_on_screen = time_on_screen + datetime.timedelta(milliseconds=0)
+	new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
 	print(new_time_on_screen)
 	print(timestamp.time().strftime("%H:%M:%S"))
 	time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
