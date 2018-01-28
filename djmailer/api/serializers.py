@@ -123,7 +123,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		model = Attempt
 		fields = "__all__"
 		# fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'created')
-		read_only_fields = ('created',)
+		# read_only_fields = ('created',)
 		# exclude = ('created',)
 
 
