@@ -220,7 +220,7 @@ def verify_scan(data):
 	if last_attempt:
 		print("\n" + str(last_attempt.time_created) + "\n")
 
-
+# adsdfsdf
 
 	if attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
 		print("WOoooo")
