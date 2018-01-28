@@ -182,6 +182,13 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	# print("new_date_on_screen: " + str(new_date_on_screen))
 	# print("new_time_on_screen: " + str(new_time_on_screen))
 
+	(year, month, day) = date_on_screen.split("-")
+	(hour, minute, second) = time_on_screen.split(":")
+
+	combined_time = datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second)
+
+	print("\n\nCombined time: " + str(combined_time))
+
 	verified = True
 
 	# Check dates from screen
