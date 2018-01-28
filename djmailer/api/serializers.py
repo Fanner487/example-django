@@ -220,21 +220,22 @@ def verify_scan(data):
 	if last_attempt:
 		print("\n" + str(last_attempt.time_created) + "\n")
 
-# adsdfsdf
 
 	if attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
 		print("WOoooo")
 
 
 		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
+		
+		if last_attempt:
 
-		if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
-			print("DOUBLE WOO")
+			if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
+				print("DOUBLE WOO")
 
-			print("Time created now: " + str(timezone.now()))
-			print("Time created: " + str(last_attempt.time_created))
+				print("Time created now: " + str(timezone.now()))
+				print("Time created: " + str(last_attempt.time_created))
 
-			# Put time checking shit in here tomorrow
+				# Put time checking shit in here tomorrow
 
 
 
