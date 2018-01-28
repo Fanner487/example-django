@@ -33,6 +33,7 @@ class EventSerializer(serializers.ModelSerializer):
 		username= data.get('organiser').strip()
 		start_time = data.get('start_time').replace(tzinfo=utc)
 		finish_time = data.get('finish_time').replace(tzinfo=utc)
+		sign_in_time = data.get('sign_in_time').replace(tzinfo=utc)
 		attendees = data.get('attendees')
 		time_now = datetime.now().replace(tzinfo=utc)
 
@@ -50,6 +51,9 @@ class EventSerializer(serializers.ModelSerializer):
 
 		if start_time < time_now or finish_time < time_now:
 			raise serializers.ValidationError("Time must be in future")
+
+		if sign_in_time > start_time: 
+			raise serializers.ValidationError("Sign in time must be in before or equal start time")
 
 		# Checks every username in attendee list
 		for attendee in attendees:
@@ -170,50 +174,21 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 
 	event = Event.objects.get(id=event_id)
 
-	event_start_date = event.start_time.date()
-	event_finish_date = event.finish_time.date()
-	event_start_time = event.start_time.time()
-	event_finish_time = event.finish_time.time()
-
-	print("event_start_date: " + str(event_start_date))
-	print("event_finish_date: " + str(event_finish_date))
-	print("event_start_time: " + str(event_start_time))
-	print("event_finish_time: " + str(event_finish_time))
-	# print("new_date_on_screen: " + str(new_date_on_screen))
-	# print("new_time_on_screen: " + str(new_time_on_screen))
-	
-
-
-	# (year, month, day) = date_on_screen.split("-")
-	# (hour, minute, second) = time_on_screen.split(":")
-
+	# parsing date and time on screen into new datetime variable for comparison
 	utc = pytz.UTC
 	combined_time = datetime(year=date_on_screen.year, month=date_on_screen.month, day=date_on_screen.day, 
 		hour=time_on_screen.hour, minute=time_on_screen.minute, second=time_on_screen.second).replace(tzinfo=utc)
 
-	print("\n\nCombined time: " + str(combined_time))
-	print("\n\nEvent sign in: " + str(event.sign_in_time))
-	print("\n\nEvent finish: " + str(event.finish_time))
+	# print("\n\nCombined time: " + str(combined_time))
+	# print("\n\nEvent sign in: " + str(event.sign_in_time))
+	# print("\n\nEvent finish: " + str(event.finish_time))
 
 	verified = True
 
 	if event.sign_in_time <= combined_time <= event.finish_time:
-		print("Within new time bro")
+		print("Within the time")
 	else:
 		verified = False
-
-	# # Check dates from screen
-	# if event_start_date <= date_on_screen <= event_finish_date:
-	# 	print("Within date")
-	# else:
-	# 	verified = False
-
-	# # Check times from screen
-	# if event.sign_in_time.time() <= time_on_screen <= event_finish_time:
-	# 	print("Within time")
-	# else:
-	# 	verified = False
-
 
 	# Check through timestamp
 	if event.sign_in_time <= timestamp <= event.finish_time:
@@ -229,6 +204,11 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 
 	time_difference = (timestamp - combined_time).total_seconds()
 	print(time_difference)
+
+	if time_difference < 5:
+		print("screen time withing delta")
+	else:
+		verified = False
 	# new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
 
 	# time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
