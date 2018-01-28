@@ -11,8 +11,8 @@ class AttemptAdmin(admin.ModelAdmin):
 
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('id', 'organiser', 'name', 'location', 'start_time', 'sign_in_time', 'finish_time')
-	readonly_fields = ('time_created',)
+	# readonly_fields = ('time_created',)
 
 admin.site.register(Subscriber)
-admin.site.register(Event)
+admin.site.register(Event, EventAdmin)
 admin.site.register(Attempt, AttemptAdmin)
