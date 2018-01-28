@@ -187,7 +187,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	# (year, month, day) = date_on_screen.split("-")
 	# (hour, minute, second) = time_on_screen.split(":")
 
-	combined_time = datetime(year=date_on_screen.year, month=date_on_screen.month, day=date_on_screen.day, 
+	combined_time = timezone(year=date_on_screen.year, month=date_on_screen.month, day=date_on_screen.day, 
 		hour=time_on_screen.hour, minute=time_on_screen.minute, second=time_on_screen.second)
 
 	print("\n\nCombined time: " + str(combined_time))
