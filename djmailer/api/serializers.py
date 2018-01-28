@@ -225,6 +225,7 @@ def verify_scan(data):
 		print("WOoooo")
 
 
+		# Check for last event
 		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
 		
 		if last_attempt:
@@ -234,6 +235,7 @@ def verify_scan(data):
 
 				print("Time created now: " + str(timezone.now()))
 				print("Time created: " + str(last_attempt.time_created))
+				print(str(timezone.now() - last_attempt.time_created))
 
 				# Put time checking shit in here tomorrow
 
