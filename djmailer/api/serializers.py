@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = "__all__"
-		# exclude = ('created',
+		exclude = ('password',)
 
 class SubscriberSerializer(serializers.ModelSerializer):
 
