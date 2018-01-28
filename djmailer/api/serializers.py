@@ -231,6 +231,9 @@ def verify_scan(data):
 		if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
 			print("DOUBLE WOO")
 
+			print("Time created now: " + str(timezone.now()))
+			print("Time created: " + str(last_attempt.time_created))
+
 			# Put time checking shit in here tomorrow
 
 
