@@ -92,7 +92,7 @@ class AttemptSerializer(serializers.ModelSerializer):
 		created = data.get('time_created')
 		print("\n\n\n----------NEW ATTEMPT---------\n" )
 
-		print("\n\n\n\nCreated: " + str(created))
+		print("\nCreated: " + str(created))
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
@@ -198,7 +198,7 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 		verified = False
 
 	# Check screen time within timestamp delta
-	print("\n\n\n")
+	print("\n")
 	print(combined_time)
 	print(timestamp)
 
