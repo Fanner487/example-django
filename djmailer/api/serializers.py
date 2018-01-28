@@ -127,7 +127,7 @@ def verify_scan(data):
 	verified = True
 
 	# Verifies current attempt
-	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, created):
+	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, current_created):
 		print("Woooo")
 
 		# Gets last attempt
