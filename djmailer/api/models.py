@@ -38,12 +38,12 @@ class Attempt(models.Model):
 	date_on_screen = models.DateTimeField()
 
 
-	def save(self, *args, **kwargs):
+	# def save(self, *args, **kwargs):
 
-		# Create timestamp
-		if not self.id: 
-			self.time_created = timezone.now()
+	# 	# Create timestamp
+	# 	if not self.id: 
+	# 		self.time_created = timezone.now()
 
-		super(Attempt, self).save(*args, **kwargs)
+	# 	super(Attempt, self).save(*args, **kwargs)
 
 
