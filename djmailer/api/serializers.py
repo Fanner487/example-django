@@ -83,10 +83,10 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		data['time_created'] = now 
 
-		
+
 		created = data.get('time_created')
 
-		print("Created: " + str(data))
+		print("Created: " + str(created))
 
 		# Checks if user exists
 		if not user_exists(username.strip()):
