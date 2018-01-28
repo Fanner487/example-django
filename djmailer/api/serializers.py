@@ -91,11 +91,11 @@ class AttemptSerializer(serializers.ModelSerializer):
 		time_on_screen = data.get('time_on_screen')
 		date_on_screen = data.get('date_on_screen')
 
-		# Setting time_created to now
-		data['time_created'] = now 
+		# Setting created to now
+		data['created'] = now 
 
 
-		created = data.get('time_created')
+		created = data.get('created')
 		print("\n\n\n----------NEW ATTEMPT---------\n" )
 
 		print("\nCreated: " + str(created))
@@ -122,8 +122,8 @@ class AttemptSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Attempt
 		fields = "__all__"
-		# fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'time_created')
-		read_only_fields = ('time_created',)
+		# fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'created')
+		read_only_fields = ('created',)
 		# exclude = ('created',)
 
 
@@ -133,7 +133,7 @@ def verify_scan(data):
 	event_id = data.get('event_id')
 	time_on_screen = data.get('time_on_screen')
 	date_on_screen = data.get('date_on_screen')
-	current_created = data.get('time_created')
+	current_created = data.get('created')
 
 	verified = True
 
@@ -141,15 +141,15 @@ def verify_scan(data):
 	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, current_created):
 
 		# Gets last attempt
-		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
+		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-created").first()
 		
 		if last_attempt:
 
 			# Verifies second attempt for event
-			if valid_attempt_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
+			if valid_attempt_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.created):
 
 				# Check if time within 10 seconds of last
-				seconds_difference = (current_created - last_attempt.time_created).total_seconds()
+				seconds_difference = (current_created - last_attempt.created).total_seconds()
 				delta = 10
 
 				# Makes sure that the current time after alst attempt time and within delta
@@ -214,13 +214,6 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 		print("screen time withing delta")
 	else:
 		verified = False
-	# new_time_on_screen = time_on_screen + timedelta(milliseconds=0)
-
-	# time_difference = (timestamp.time() - new_time_on_screen).total_seconds()
-
-	# (current_created - last_attempt.time_created).total_seconds()
-	# print("Time difference to delta: " + str(time_difference))
-
 
 	return verified
 
@@ -241,11 +234,11 @@ def event_exists(event_id):
 	
 	event = Event.objects.filter(id=event_id)
 
-
 	if event_count == 1:
 		return True
 	else:
 		return False
+
 
 def user_is_attendee(username, event_id):
 
