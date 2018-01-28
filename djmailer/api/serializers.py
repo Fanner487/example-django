@@ -144,7 +144,7 @@ def verify_scan(data):
 				seconds_difference = (created - last_attempt.time_created).total_seconds()
 				delta = 10
 
-				if seconds_difference < delta:
+				if 0 < seconds_difference < delta :
 
 					print("Two attempts within delta")
 					add_to_attending(username, event_id)
