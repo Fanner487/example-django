@@ -110,8 +110,8 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Attempt
-		# fields = "__all__"
-		fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'time_created')
+		fields = "__all__"
+		# fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'time_created')
 		read_only_fields = ('time_created',)
 		# exclude = ('created',)
 
@@ -122,7 +122,7 @@ def verify_scan(data):
 	event_id = data.get('event_id')
 	time_on_screen = data.get('time_on_screen')
 	date_on_screen = data.get('date_on_screen')
-	created = data.get('time_created')
+	current_created = data.get('time_created')
 
 	verified = True
 
@@ -139,7 +139,7 @@ def verify_scan(data):
 			if valid_attempt_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
 
 				# Check if time within 10 seconds of last
-				seconds_difference = (created - last_attempt.time_created).total_seconds()
+				seconds_difference = (current_created - last_attempt.time_created).total_seconds()
 				delta = 10
 
 				# Makes sure that the current time after alst attempt time and within delta
@@ -175,35 +175,33 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	event_finish_time = event.finish_time.time()
 	# event_sign_in_time = event.sign_in_time.time()
 
-	new_date_on_screen = date_on_screen.date()
-	new_time_on_screen = time_on_screen.time()
+	# new_date_on_screen = date_on_screen.date()
+	# new_time_on_screen = time_on_screen.time()
 
 	print("event_start_date: " + str(event_start_date))
 	print("event_finish_date: " + str(event_finish_date))
 	print("event_start_time: " + str(event_start_time))
 	print("event_finish_time: " + str(event_finish_time))
-	print("new_date_on_screen: " + str(new_date_on_screen))
-	print("new_time_on_screen: " + str(new_time_on_screen))
-
+	# print("new_date_on_screen: " + str(new_date_on_screen))
+	# print("new_time_on_screen: " + str(new_time_on_screen))
 
 	verified = True
 
-
-	# Check dates
-	if event_start_date <= new_date_on_screen <= event_finish_date:
+	# Check dates from screen
+	if event_start_date <= date_on_screen <= event_finish_date:
 		print("Within date")
 	else:
 		verified = False
 
-	# Check times
-	if event.sign_in_time.time() <= new_time_on_screen <= event_finish_time:
+	# Check times from screen
+	if event.sign_in_time.time() <= time_on_screen <= event_finish_time:
 		print("Within time")
 	else:
 		verified = False
 
 
 	# Check through timestamp
-	if event.start_time <= timezone.now() <= event.finish_time:
+	if event.start_time <= timestamp <= event.finish_time:
 
 		print("Within timezone")
 	else:

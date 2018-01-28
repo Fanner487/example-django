@@ -34,8 +34,8 @@ class Attempt(models.Model):
 	username = models.CharField("username", max_length=50)
 	event_id = models.IntegerField("event_id")
 	time_created = models.DateTimeField(null=True, blank=True)
-	time_on_screen = models.DateTimeField()
-	date_on_screen = models.DateTimeField()
+	time_on_screen = models.TimeField()
+	date_on_screen = models.DateField()
 
 
 	# def save(self, *args, **kwargs):
