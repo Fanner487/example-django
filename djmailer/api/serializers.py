@@ -71,18 +71,19 @@ class EventSerializer(serializers.ModelSerializer):
 
 class AttemptSerializer(serializers.ModelSerializer):
 
-	# username = models.CharField("username", max_length=50)
-	# event_id = models.IntegerField("event_id")
-	# created = models.DateTimeField(auto_now_add=True)
-	# time_on_screen = models.DateTimeField(null=True, blank=True)
-	# date_on_screen = models.DateTimeField(null=True, blank=True)
-
 	def validate(self, data):
+
+		now = timezone.now()
+		print("Time now: " + str(now))
 
 		username = data.get('username').strip()
 		event_id = data.get('event_id')
 		time_on_screen = data.get('time_on_screen')
 		date_on_screen = data.get('date_on_screen')
+
+		data['time_created'] = now 
+
+		
 		created = data.get('time_created')
 
 		print("Created: " + str(data))
@@ -99,12 +100,11 @@ class AttemptSerializer(serializers.ModelSerializer):
 
 		# Check if user exists in attendee list and not already in attending 
 		if not user_is_attendee(username, event_id):
-			raise serializers.ValidationError("User is not in attendees or alread in list")
-
+			raise serializers.ValidationError("User is not in attendees or already in list")
 
 		# If user is attendee, add to list with verification
+		# Doesn't need to raise Validation error, needs to check for duplicates
 		verify_scan(data)
-
 
 		return data
 
@@ -114,6 +114,102 @@ class AttemptSerializer(serializers.ModelSerializer):
 		fields = ('id', 'username', 'event_id', 'time_on_screen', 'date_on_screen', 'time_created')
 		read_only_fields = ('time_created',)
 		# exclude = ('created',)
+
+
+def verify_scan(data):
+
+	username = data.get('username')
+	event_id = data.get('event_id')
+	time_on_screen = data.get('time_on_screen')
+	date_on_screen = data.get('date_on_screen')
+
+	verified = True
+
+	# Verifies current attempt
+	if valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
+		print("Woooo")
+
+		# Gets last attempt
+		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
+		
+		if last_attempt:
+
+			# Verifies second attempt for event
+			if valid_attempt_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
+
+				print("Difference: " + str((timezone.now() - last_attempt.time_created).total_seconds()) + " seconds")
+
+				# Check if time within 10 seconds of last
+				seconds_difference = (timezone.now() - last_attempt.time_created).total_seconds()
+				delta = 10
+
+				if seconds_difference < delta:
+
+					print("Two attempts within delta")
+					add_to_attending(username, event_id)
+				else:
+					verified = False
+					print("Two attempts not within delta")
+			else:
+				verified = False
+		else:
+			verified = False
+
+	else:
+
+		print("Current attempt not valid")
+		verified = False
+
+	return verified
+
+
+def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, timestamp):
+
+	event = Event.objects.get(id=event_id)
+
+	event_start_date = event.start_time.date()
+	event_finish_date = event.finish_time.date()
+	event_start_time = event.start_time.time()
+	event_finish_time = event.finish_time.time()
+	# event_sign_in_time = event.sign_in_time.time()
+
+	new_date_on_screen = date_on_screen.date()
+	new_time_on_screen = time_on_screen.time()
+
+	print("event_start_date: " + str(event_start_date))
+	print("event_finish_date: " + str(event_finish_date))
+	print("event_start_time: " + str(event_start_time))
+	print("event_finish_time: " + str(event_finish_time))
+	print("new_date_on_screen: " + str(new_date_on_screen))
+	print("new_time_on_screen: " + str(new_time_on_screen))
+
+
+	verified = True
+
+
+	# Check dates
+	if event_start_date <= new_date_on_screen <= event_finish_date:
+		print("Within date")
+	else:
+		verified = False
+
+	# Check times
+	if event.sign_in_time.time() <= new_time_on_screen <= event_finish_time:
+		print("Within time")
+	else:
+		verified = False
+
+
+	# Check through timestamp
+	if event.start_time <= timezone.now() <= event.finish_time:
+
+		print("Within timezone")
+	else:
+		verified = False
+
+	# Check 
+
+	return verified
 
 
 # Checks if user exists with only one entry
@@ -158,108 +254,19 @@ def user_is_attendee(username, event_id):
 	else:
 		return False
 
-def attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timestamp):
-
-	verified = True
-
-	event = Event.objects.get(id=event_id)
-
-	event_start_date = event.start_time.date()
-	event_finish_date = event.finish_time.date()
-	event_start_time = event.start_time.time()
-	event_finish_time = event.finish_time.time()
-	# event_sign_in_time = event.sign_in_time.time()
-
-	new_date_on_screen = date_on_screen.date()
-	new_time_on_screen = time_on_screen.time()
-
-	print("event_start_date: " + str(event_start_date))
-	print("event_finish_date: " + str(event_finish_date))
-	print("event_start_time: " + str(event_start_time))
-	print("event_finish_time: " + str(event_finish_time))
-	print("new_date_on_screen: " + str(new_date_on_screen))
-	print("new_time_on_screen: " + str(new_time_on_screen))
-
-
-	# Check dates
-	if event_start_date <= new_date_on_screen <= event_finish_date:
-		print("Within date")
-	else:
-		verified = False
-
-	# Check times
-	if event.sign_in_time.time() <= new_time_on_screen <= event_finish_time:
-		print("Within time")
-	else:
-		verified = False
-
-
-	# Check through timestamp
-	if event.start_time <= timezone.now() <= event.finish_time:
-
-		print("Within timezone")
-	else:
-		verified = False
-
-
-	return verified
-
-def verify_scan(data):
-	# username, event_id, time_on_screen, date_on_screen, timestamp
-
-	username = data.get('username')
-	event_id = data.get('event_id')
-	time_on_screen = data.get('time_on_screen')
-	date_on_screen = data.get('date_on_screen')
-	last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
-
-	if attempt_valid_in_event(username, event_id, time_on_screen, date_on_screen, timezone.now()):
-		print("WOoooo")
-
-		# Check for last event
-		last_attempt = Attempt.objects.filter(username=username).filter(event_id=event_id).order_by("-time_created").first()
-		
-		if last_attempt:
-
-			if attempt_valid_in_event(last_attempt.username, last_attempt.event_id, last_attempt.time_on_screen, last_attempt.date_on_screen, last_attempt.time_created):
-				print("DOUBLE WOO")
-
-				print("Time created now: " + str(timezone.now()))
-				print("Time created: " + str(last_attempt.time_created))
-				print(str((timezone.now() - last_attempt.time_created).total_seconds()))
-
-				seconds_difference = (timezone.now() - last_attempt.time_created).total_seconds()
-				delta = 10
-
-				if seconds_difference < delta:
-
-					add_to_attending(username, event_id)
-
-				# Put time checking shit in here tomorrow
-
-	else:
-		print("Fuuuucckkk")
-
-
-
-
-
-
 def add_to_attending(username, event_id):
 
 	event = Event.objects.get(id=event_id)
 
 	if not username in event.attending:
+
 		print("Appending user")
 		event.attending.append(username.strip().lower())
 		event.save()
 
 		return True
+
 	else:
 
 		print("Not Appending user")
 		return False
-
-	
-
-# class UserSerializer(serializers.ModelSerializer)

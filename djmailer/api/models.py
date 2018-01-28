@@ -40,17 +40,9 @@ class Attempt(models.Model):
 
 	def save(self, *args, **kwargs):
 
+		# Create timestamp
 		if not self.id: 
 			self.time_created = timezone.now()
-
-			print("\n\nIn savse\n\n")
-
-
-
-			print(self.time_created)
-			
-
-
 
 		super(Attempt, self).save(*args, **kwargs)
 
