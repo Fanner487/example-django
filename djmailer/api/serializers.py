@@ -181,13 +181,16 @@ def valid_attempt_in_event(username, event_id, time_on_screen, date_on_screen, t
 	print("event_finish_time: " + str(event_finish_time))
 	# print("new_date_on_screen: " + str(new_date_on_screen))
 	# print("new_time_on_screen: " + str(new_time_on_screen))
+	print("\n\nMinute: " + str(time_on_screen.minute))
+	print("\n\nMonth: " + str(date_on_screen.month))
 
-	(year, month, day) = date_on_screen.split("-")
-	(hour, minute, second) = time_on_screen.split(":")
 
-	combined_time = datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second)
+	# (year, month, day) = date_on_screen.split("-")
+	# (hour, minute, second) = time_on_screen.split(":")
 
-	print("\n\nCombined time: " + str(combined_time))
+	# combined_time = datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second)
+
+	# print("\n\nCombined time: " + str(combined_time))
 
 	verified = True
 
