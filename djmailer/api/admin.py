@@ -6,6 +6,7 @@ from .models import Subscriber, Event, Attempt
 # Register your models here.
 
 class AttemptAdmin(admin.ModelAdmin):
+	list_display = ('username', 'event_id', 'time_on_screen', 'date_on_screen')
 	readonly_fields = ('time_created',)
 
 admin.site.register(Subscriber)
