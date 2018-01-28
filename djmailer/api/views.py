@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 
 from rest_framework.viewsets import ModelViewSet
-from .serializers import SubscriberSerializer, EventSerializer, AttemptSerializer
+from .serializers import SubscriberSerializer, EventSerializer, AttemptSerializer, UserSerializer
 from .models import Subscriber, Event, Attempt
 from rest_framework.generics import ListCreateAPIView
 
@@ -39,6 +39,11 @@ class SubscriberViewSet(ModelViewSet):
 	serializer_class = SubscriberSerializer
 	queryset = Subscriber.objects.all()
 
+
+class UserViewSet(ModelViewSet):
+
+	serializer_class = UserSerializer
+	queryset = User.objects.all()
 
 # class AttemptView(ListCreateAPIView):
 # 	serializer_class = AttemptSerializer

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from rest_framework.routers import SimpleRouter
 
 # from .views import SubscriberView
-from .views import SubscriberViewSet, EventViewSet, AttemptViewSet
+from .views import SubscriberViewSet, EventViewSet, AttemptViewSet, UserViewSet
 from .views import login, register, get_events, delete_table
 
 
@@ -10,6 +10,7 @@ router = SimpleRouter()
 router.register("subscribers", SubscriberViewSet)
 router.register("events", EventViewSet)
 router.register("attempts", AttemptViewSet)
+router.register("users", UserViewSet)
 
 
 

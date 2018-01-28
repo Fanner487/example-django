@@ -6,6 +6,12 @@ from datetime import timedelta
 from django.utils import timezone 
 import pytz
 
+class UserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = "__all__"
+		# exclude = ('created',
+
 class SubscriberSerializer(serializers.ModelSerializer):
 
 	def validate(self, data):
